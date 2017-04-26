@@ -1,13 +1,15 @@
 PImage img;
-float [][] enemyPositions = {{560, 450}};
+
 Protagonist protagonist;
 Spider spider;
+Laser laser;
 void setup(){
   surface.setResizable(true);
   img = loadImage("gravity_illustrator.bmp");
   size(700,560);
   protagonist = new Protagonist();
-  spider = new Spider(enemyPositions[0]);
+  spider = new Spider(spider_Positions[0]);
+  laser = new Laser(laser_Positions[0]);
 
 }
 
