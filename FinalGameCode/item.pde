@@ -1,4 +1,4 @@
-PImage[] images;
+/*PImage[] images;
 
 
 class ItemGroup {
@@ -66,4 +66,4 @@ class Item {
       image(appear, ItemX, ItemY);
     }
   }
-}
+}*/
