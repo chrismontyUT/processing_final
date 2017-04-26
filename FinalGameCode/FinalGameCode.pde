@@ -1,5 +1,5 @@
 PImage img;
-
+float [][] spider_Positions = {{560,450}};
 Protagonist protagonist;
 Spider spider;
 Laser laser;
@@ -9,7 +9,7 @@ void setup(){
   size(700,560);
   protagonist = new Protagonist();
   spider = new Spider(spider_Positions[0]);
-  laser = new Laser(laser_Positions[0]);
+  //laser = new Laser(laser_Positions[0]);
 
 }
 
