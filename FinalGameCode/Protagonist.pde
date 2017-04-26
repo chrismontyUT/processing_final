@@ -48,15 +48,20 @@ class Protagonist {
     xpos += velocity.x;
   }
   void jump() {
-
-    //frame = (frame+1) % (11*slow);
     fallVelocity = -8;
     fall();
-    //image(jump, xpos, ypos+2);
   }
-  void duck() {
-    frame = (frame+1) % (11*slow);
-    image(duck, xpos+10, ypos+20);
+  void duck() { 
+    fallVelocity += 1;
+    xpos += velocity.x;
+    if (velocity.x>0)
+    {
+      image(duck, xpos, ypos+20);
+    } else
+    {
+      scale(-1, 1);
+      image(duck, -xpos-70, ypos+20);
+    }
   }
   void stand() {
     image(stand, xpos, ypos+2);
@@ -65,12 +70,11 @@ class Protagonist {
     ypos += fallVelocity;
     fallVelocity += fallGravity;
     xpos += velocity.x;
-    
-    if(velocity.x>0)
+
+    if (velocity.x>0)
     {
-    image(fall, xpos, ypos+2);
-    }
-    else
+      image(fall, xpos, ypos+2);
+    } else
     {
       scale(-1, 1);
       image(fall, -xpos-70, ypos+2);
