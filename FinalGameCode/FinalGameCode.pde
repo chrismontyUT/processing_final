@@ -9,6 +9,8 @@ ItemGroup itemlevel1;
 void setup(){
   surface.setResizable(true);
   img = loadImage("level1.bmp");
+  println(img.width);
+  println(img.height);
   size(1230,680);
   protagonist = new Protagonist();
   spider = new Spider(spider_Positions[0]);
