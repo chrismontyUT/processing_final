@@ -4,31 +4,6 @@ float playy = 380;
 float point;
 float life;
 
-void setupitems() {
-  bombname = append(bombname, "bomb.png");
-  bombname = append(bombname, "bombFlash.png" );
-  coinname = append(coinname, "coinBronze.png");
-  coinname = append(coinname, "coinSilver.png");
-  coinname = append(coinname, "coinGold.png");
-  mushroom = append(mushroom, "mushroomBrown.png");
-  mushroom = append(mushroom, "mushroomRed.png");
-  gemname = append(gemname, "gemGreen.png");
-  gemname = append(gemname, "gemBlue.png");
-  gemname = append(gemname, "gemRed.png");
-  gemname = append(gemname, "gemYellow.png");
-
-  items[0][0] = loadImage("bomb.png");
-  items[0][1] = loadImage("bombFlash.png");
-  items[1][0] = loadImage("coinBronze.png");
-  items[1][1] = loadImage("coinSilver.png");
-  items[1][2] = loadImage("coinGold.png");
-  items[2][0] = loadImage("mushroomBrown.png");
-  items[2][1] = loadImage("mushroomRed.png");
-  items[3][0] = loadImage("gemGreen.png");
-  items[3][1] = loadImage("gemBlue.png");
-  items[3][2] = loadImage("gemRed.png");
-  items[3][3] = loadImage("gemYellow.png");
-}
 
 class ItemGroup {
   ArrayList<Item> itemgroups;
@@ -40,8 +15,8 @@ class ItemGroup {
     life = 0;
   }
 
-  void addItem(int x, int y, float effect, float pits, int index) {
-    itemgroups.add(new Item(x, y, effect, pits, index));
+  void addItem(int x, int y, float effect, float pits, String name) {
+    itemgroups.add(new Item(x, y, effect, pits, name));
   }
   void update() {
     playx = protagonist.xpos;
@@ -75,8 +50,9 @@ class Item {
   int counter;
   float timer;
   int len;
+  String name;
 
-  Item(int x, int y, float pointss, float effect, int ind)
+  Item(int x, int y, float pointss, float effect, String nam)
   {
     ItemX = x;
     ItemY = y;
@@ -85,14 +61,14 @@ class Item {
     eff = effect;
     wid = img.width;
     heig = img.height;
-    index = ind;
+    name = nam;
     isdead = false;
     len = 0;
-    counter = 0;
-    if(ind == 0){len = 2;}
-    if(ind == 1){len = 3;}
-    if(ind == 2){len = 2;}
-    if(ind == 3){len = 4;}
+    counter = 1;
+    if(name == "bomb"){len = 2;}
+    if(name == "coin"){len = 3;}
+    if(name == "mushroom"){len = 2;}
+    if(name == "gem"){len = 4;}
     
   }
   void show() {
@@ -100,10 +76,11 @@ class Item {
       counter = counter + 1;
       timer = 0;
     }
-    if (counter >= len) {
-      counter = 0;
+    if (counter > len) {
+      counter = 1;
     }
-    image(items[index][counter], ItemX, ItemY);
+    img = loadImage(name+str(counter)+".png");
+    image(img, ItemX, ItemY);
   }
 
   void iscatch() {
