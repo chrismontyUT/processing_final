@@ -1,4 +1,4 @@
-class Protagonist { //<>// //<>// //<>// //<>//
+class Protagonist { //<>// //<>// //<>// //<>// //<>// //<>//
   String collisionState;
   PImage[] images;
   PImage fall, stand, jump, duck;
@@ -9,12 +9,14 @@ class Protagonist { //<>// //<>// //<>// //<>//
   int xpos;//this is the top left corner of the sprite
   int ypos;//this is the top left corner
   PVector velocity;
+  boolean falling;
 
 
   Protagonist() {
     images = new PImage[11];
     xpos = 0;
     ypos = 0;
+    falling = false;
     for (int i=0; i<11; i++) {
       String filename = "p1_walk" + nf(i+1, 2) + ".png";
       images[i] = loadImage(filename);
@@ -48,6 +50,9 @@ class Protagonist { //<>// //<>// //<>// //<>//
       velocity.x = -3;
 
     xpos += velocity.x;
+    if (xpos<0) {
+      xpos = 0;
+    }
   }
   void jump() {
     fallVelocity = -8;
@@ -71,9 +76,14 @@ class Protagonist { //<>// //<>// //<>// //<>//
   void fall() {
     ypos += fallVelocity;
     fallVelocity += fallGravity;
-    println(fallVelocity);
-    println(fallGravity);
+    if (fallVelocity>3) {
+      fallVelocity = 3;
+    }
     xpos += velocity.x;
+    if (xpos<0) {
+      xpos = 0;
+      velocity.x = -velocity.x;
+    }
 
     if (velocity.x>0)
     {
@@ -86,56 +96,124 @@ class Protagonist { //<>// //<>// //<>// //<>//
   }
 
   public boolean canMove() {
-    //println(width*(ypos+images[0].height)+xpos+images[0].width/2);
-    //println(ypos+images[0].height,xpos+images[0].width/2);
-    color testcolor = get(ypos+images[0].height+1, xpos+images[0].width/2);
-    fill(testcolor);
-    rect(20, 20, 20, 20);
-    //println(images[0].width);
-    //println(images[0].height);
-    //println(xpos);
-    //println(ypos);
-    //if he's not on solid ground, he should fall straight down, not walk
-    //we check this by seeing if the pixel below his center is black
-    //if (pixels[width*(ypos+images[0].height)+xpos+images[0].width/2] == color(0, 0, 0))
-    if (xpos<=images[0].width) {
-      if (get(ypos+images[0].height, xpos) == color(0, 0, 0)) {
+    if (xpos < images[0].width) {
+      if (xpos-velocity.x <0) {
+        println(xpos);
+        if (xpos<0) {
+          xpos = 1;
+          println("011");
+          //velocity.x = abs(velocity.x);
+        }
+        velocity.x = abs(velocity.x);
+        return false;
+      }
+      if (get(ypos+images[0].height, xpos) == color(0, 0, 0) && velocity.x >0) {
         fall();
+        println("02");
         return false;
-      } else if (get(ypos+images[0].height/2, xpos) != color(0, 0, 0)) {
-        println("ues");
-        //if its a boundary wall, he should stand, not walk
-        stand();
+      } 
+      else if (get(ypos+images[0].height, xpos+images[0].width) == color(0, 0, 0) && velocity.x<=0) {
+        fall();
+        println("022");
         return false;
-        //if token- (he should grab it and walk)true
-        //if enemy- (he should die) gameOver
-      } else {
-        //the protagonist is not blocked by an objects, he is standing on solid ground, so he can move
+      } 
+      else if (get(ypos+images[0].height/2, xpos) != color(0, 0, 0) && velocity.x<=0) {
+        fall();
+        println("022");
+        return false;
+      } 
+      else if (get(ypos+images[0].height/2, xpos+images[0].width) != color(0, 0, 0) && velocity.x>=0) {
+        fall();
+        println("023");
+        return false;
+      } 
+      else {
+        println("03");
+
         return true;
       }
     } else {
-      if (get(ypos+images[0].height, xpos-images[0].width) == color(0, 0, 0)) {
-        fall();
-        return false;
-      }
-      //if colliding with an object, he needs to check what that object is
-      //else if (pixels[width*(ypos+images[0].height/2)+xpos+images[0].width] != color(0, 0, 0)) {
-      else if (get(ypos+images[0].height/2, xpos-images[0].width) != color(0, 0, 0)) {
-        println("ues");
-        //if its a boundary wall, he should stand, not walk
-        stand();
+      if (velocity.x < 0 || keyCode == LEFT) {
+        if (get(ypos+images[0].height, xpos+images[0].width) == color(0, 0, 0)) {
+          fall();
+          println(xpos);
 
-        return false;
-        //if token- (he should grab it and walk)true
-        //if enemy- (he should die) gameOver
+          return false;
+        }
+        if (get(ypos+images[0].height/2, xpos) != color(0, 0, 0)) {
+          stand();
+          println("2");
+          return false;
+        }
+      } else if (velocity.x >= 0 || keyCode == RIGHT) {
+        if (get(ypos+images[0].height, xpos) == color(0, 0, 0)) {
+          fall();
+          println("3");
+          return false;
+        }
+        if (get(ypos+images[0].height/2, xpos) != color(0, 0, 0)) {
+          stand();
+          stroke(255, 0, 0);
+          fill(255, 0, 0);
+          point(ypos+images[0].height/2, xpos-images[0].width/2);
+          println(ypos);
+          println(xpos);
+          println("4");
+          return false;
+        }
       } else {
-        //the protagonist is not blocked by an objects, he is standing on solid ground, so he can move
         return true;
       }
-      //location of his back
-      //pixels[width*(ypos+images[0].height/2)+xpos] = color(255, 102, 204);
-      //location of his top
-      //pixels[width*(ypos-3)+xpos+images[0].width/2] == color(0,0,0);
     }
+    return true;
   }
+  /*color testcolor = get(ypos+images[0].height+1, xpos+images[0].width/2);
+   fill(testcolor);
+   rect(20, 20, 20, 20);
+   if (xpos<=images[0].width) {
+   if(velocity.x>0){
+   if (get(ypos+images[0].height, xpos) == color(0, 0, 0)
+   }
+   if (get(ypos+images[0].height, xpos) == color(0, 0, 0)&& get(ypos+images[0].height, xpos+images[0].width/2) == color(0, 0, 0)) {
+   fall();
+   return false;
+   } else if (get(ypos+images[0].height/2, xpos) != color(0, 0, 0) && get(ypos+images[0].height/2, xpos+images[0].width) != color(0, 0, 0)) {
+   println("ues");
+   //if its a boundary wall, he should stand, not walk
+   stand();
+   return false;
+   //if token- (he should grab it and walk)true
+   //if enemy- (he should die) gameOver
+   } else {
+   //the protagonist is not blocked by an objects, he is standing on solid ground, so he can move
+   return true;
+   }
+   } 
+   else {
+   if (get(ypos+images[0].height, xpos-images[0].width) == color(0, 0, 0) && get(ypos+images[0].height, xpos+images[0].width) == color(0, 0, 0)) {
+   fall();
+   return false;
+   }
+   //if colliding with an object, he needs to check what that object is
+   //else if (pixels[width*(ypos+images[0].height/2)+xpos+images[0].width] != color(0, 0, 0)) {
+   else if (get(ypos+images[0].height/2, xpos-images[0].width) != color(0, 0, 0) && get(ypos+images[0].height/2, xpos+images[0].width) != color(0, 0, 0)) {
+   println("ues");
+   //if its a boundary wall, he should stand, not walk
+   stand();
+   
+   return false;
+   //if token- (he should grab it and walk)true
+   //if enemy- (he should die) gameOver
+   } else {
+   //the protagonist is not blocked by an objects, he is standing on solid ground, so he can move
+   return true;
+   }
+   //location of his back
+   //pixels[width*(ypos+images[0].height/2)+xpos] = color(255, 102, 204);
+   //location of his top
+   //pixels[width*(ypos-3)+xpos+images[0].width/2] == color(0,0,0);
+   }
+   }
+   }
+   */
 }

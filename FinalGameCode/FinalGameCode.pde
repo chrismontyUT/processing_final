@@ -30,19 +30,24 @@ void draw(){
   if (protagonist.canMove()){
     if (keyPressed){
       if (key == CODED && keyCode == RIGHT){
+        protagonist.fallVelocity =0;
         protagonist.walk();
       }
       if (key == CODED && keyCode == LEFT){
+        protagonist.fallVelocity =0;
         protagonist.walkBackwards();
       }
       if (key == CODED && keyCode == UP){
+        protagonist.fallVelocity =0;
         protagonist.jump();
       }
       if (key == CODED && keyCode == DOWN){
+        protagonist.fallVelocity =0;
         protagonist.duck();
       }
     }
     else{
+      protagonist.fallVelocity =0;
       protagonist.stand();
     } 
   }
