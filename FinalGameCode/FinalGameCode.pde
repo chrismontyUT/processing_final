@@ -5,8 +5,8 @@ Spider spider;
 Laser laser;
 void setup(){
   surface.setResizable(true);
-  img = loadImage("gravity_illustrator.bmp");
-  size(700,560);
+  img = loadImage("level1.bmp");
+  size(1230,680);
   protagonist = new Protagonist();
   spider = new Spider(spider_Positions[0]);
   //laser = new Laser(laser_Positions[0]);
