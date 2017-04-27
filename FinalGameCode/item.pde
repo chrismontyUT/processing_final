@@ -56,7 +56,6 @@ class Item {
   {
     ItemX = x;
     ItemY = y;
-    appear = img;
     points = pointss;    
     eff = effect;
     wid = img.width;
@@ -69,9 +68,11 @@ class Item {
     if(name == "coin"){len = 3;}
     if(name == "mushroom"){len = 2;}
     if(name == "gem"){len = 4;}
+    if(name == "key"){len = 4;}
     
   }
   void show() {
+    timer = timer + 1;
     if (timer == 10) {
       counter = counter + 1;
       timer = 0;
@@ -79,8 +80,8 @@ class Item {
     if (counter > len) {
       counter = 1;
     }
-    img = loadImage(name+str(counter)+".png");
-    image(img, ItemX, ItemY);
+    appear = loadImage(name+str(counter)+".png");
+    image(appear, ItemX, ItemY);
   }
 
   void iscatch() {
@@ -90,6 +91,9 @@ class Item {
           point = point + points;
           isdead = true;
           life = life + eff;
+          if(name == "key"){
+            nextlevel = true;
+          }
         }
       }
     } else {

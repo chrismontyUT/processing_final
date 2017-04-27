@@ -3,6 +3,7 @@ float [][] spider_Positions = {{560,450}};
 Protagonist protagonist;
 Spider spider;
 Laser laser;
+boolean nextlevel;
 
 ItemGroup itemlevel1;
 void setup(){
@@ -14,7 +15,9 @@ void setup(){
   //laser = new Laser(laser_Positions[0]);
   itemlevel1 = new ItemGroup();
   itemlevel1.addItem(400,500,1,0,"gem");
+  itemlevel1.addItem(2200,100,1,0,"key");
   //itemlevel1.run();
+  nextlevel = false;
 }
 
 void draw(){
