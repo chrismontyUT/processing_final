@@ -16,6 +16,7 @@ void setup(){
 void draw(){
   loadPixels();
   image(img, 0,0);
+  scale(.5);
   spider.walk();
   if (protagonist.canMove()){
     if (keyPressed){
