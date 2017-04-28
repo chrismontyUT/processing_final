@@ -1,4 +1,4 @@
-PImage img;
+PImage img1 , img2 , img3 , img4;
 Protagonist protagonist;
 int Level = 1;
 Spider spider;
@@ -11,7 +11,8 @@ EnemyGroup enemiesLevel4;
 ItemGroup itemlevel1;
 void setup(){
   surface.setResizable(true);
-  img = loadImage("level1.bmp");
+  img1 = loadImage("level1.bmp");
+  img2 = loadImage("level2.bmp"); 
  // println(img.width);
  // println(img.height);
   size(1230,680);
@@ -50,7 +51,7 @@ void setup(){
 
 void draw(){
   loadPixels();
-  image(img, 0,0);
+  image(img1, 0,0);
   scale(.5);
   if (Level == 1){
     enemiesLevel1.enemy_run();

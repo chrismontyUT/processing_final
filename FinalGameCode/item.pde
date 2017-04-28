@@ -58,8 +58,8 @@ class Item {
     ItemY = y;
     points = pointss;    
     eff = effect;
-    wid = img.width;
-    heig = img.height;
+    wid = img1.width;
+    heig = img1.height;
     name = nam;
     isdead = false;
     len = 0;
