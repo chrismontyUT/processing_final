@@ -1,9 +1,12 @@
 PImage img;
-float [][] spider_Positions = {{560,450}};
 Protagonist protagonist;
+int Level = 1;
 Spider spider;
-Laser laser;
 boolean nextlevel;
+EnemyGroup enemiesLevel1;
+EnemyGroup enemiesLevel2;
+EnemyGroup enemiesLevel3;
+EnemyGroup enemiesLevel4;
 
 ItemGroup itemlevel1;
 void setup(){
@@ -13,8 +16,31 @@ void setup(){
   println(img.height);
   size(1230,680);
   protagonist = new Protagonist();
-  spider = new Spider(spider_Positions[0]);
-  //laser = new Laser(laser_Positions[0]);
+  enemiesLevel1 = new EnemyGroup();
+  enemiesLevel2 = new EnemyGroup();
+  enemiesLevel3 = new EnemyGroup();
+  enemiesLevel4 = new EnemyGroup();
+  Table spider_list = loadTable("spiders.csv" , "header");
+  for(TableRow row : spider_list.rows()){
+    float level = row.getFloat("level");
+    float x_pos = row.getFloat("x.pos");
+    float y_pos = row.getFloat("y.pos");
+    float x_range = row.getFloat("x_range");
+    if(level == 1){
+      enemiesLevel1.addspider(x_pos , y_pos , level , x_range);
+    }
+    else if (level == 2){
+      enemiesLevel2.addspider(x_pos, y_pos , level , x_range);
+
+    }
+    else if (level == 3){
+      enemiesLevel3.addspider(x_pos , y_pos , level , x_range);
+
+    }
+    else if (level == 4){
+      enemiesLevel4.addspider(x_pos , y_pos , level , x_range);
+    }
+   }
   itemlevel1 = new ItemGroup();
   itemlevel1.addItem(400,500,1,0,"gem");
   itemlevel1.addItem(2200,100,1,0,"key");
@@ -26,7 +52,9 @@ void draw(){
   loadPixels();
   image(img, 0,0);
   scale(.5);
-  spider.walk();
+  if (Level == 1){
+    enemiesLevel1.enemy_run();
+  }
   if (protagonist.canMove()){
     if (keyPressed){
       if (key == CODED && keyCode == RIGHT){

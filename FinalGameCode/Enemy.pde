@@ -1,31 +1,44 @@
-class Enemy{
+class EnemyGroup{
   
-  PVector position_spider;
-  PVector position_laser;
+  ArrayList<Spider> spider_group;
+
+  EnemyGroup (){
+          
+      spider_group = new ArrayList<Spider>();
+
+   }
+   
+   void addspider(float x_pos , float y_pos , float level , float range){
+      spider_group.add(new Spider(x_pos , y_pos , level , range));
+ }
+   void enemy_run(){
+     for(int i = 0; i< spider_group.size(); i++){
+       Spider s = spider_group.get(i);
+       println(s.range);
+       s.walk2();
+     }
+   }
+}
+
+class Spider{
+  PImage[] images;
   boolean direction = true;
-  float [][] Level_1_enemies = {{560,450},{0,200}};
-  
   float spriteHeight = 0; 
   float spriteWidth = 0;
-  PImage[] images;
   int frame;
   int slow = 9;
+  float x;
+  float y;
+  float level;
+  float range;
+  float original_x;
   
-  Enemy (float[] position_){
-    
-    position_spider = new PVector(position_[0], position_[1]);
-    position_laser = new PVector(position_[0], position_[1]);
-  }
-  //void kill(){
-  //  background(255);
-  //  text("GameOver", 0,0);
-  //  noLoop();
-  //}
-  
-}
-class Spider extends Enemy{
-  Spider(float[] position_spider){
-    super(position_spider);
+  Spider(float x_pos , float y_pos , float level_ ,float x_range){
+    level = level_;
+    x = x_pos;
+    original_x = x_pos;
+    y = y_pos;
+    range = x_range;
     images = new PImage[2];
     for (int i=0; i<2; i++){
       String filename = "spider_walk" + nf(i+1,1) + ".png";
@@ -41,28 +54,36 @@ class Spider extends Enemy{
       direction = !direction;
     }
     if (direction){
-      position_spider.x -= .75;
-      image(images[frame/slow], position_spider.x, position_spider.y);
+      x -= .75;
+      image(images[frame/slow], x + 500, y);
     }
     else{
-      position_spider.x += .75;
+      x += .75;
       
       pushMatrix();
-      translate(position_spider.x,0);
+      translate(x,0);
       scale(-1.0, 1.0);
       
-      image(images[frame/slow], -images[0].width, position_spider.y);
+      image(images[frame/slow], -images[0].width, y);
       popMatrix();
 
     }   
     
   }
-  
-}
+  void walk2(){
+    frame = (frame+1) % (2*slow);
+    println(x , original_x , original_x - range);
+    if ((x >= (original_x + range) )^( x <= (original_x - range))){
+      direction = !direction;
+      }
+    if (direction){
+      x -= .75;
+      image(images[frame/slow] , x + 500, y);
+    }
+    else{
+      x += .75;
+      image(images[frame/slow], x + 500, y);
 
-class Laser extends Enemy{
-  Laser(float[] position_laser){
-    super(position_laser);
-    
+      }
+    }
   }
-}
