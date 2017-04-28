@@ -14,8 +14,7 @@ class EnemyGroup{
    void enemy_run(){
      for(int i = 0; i< spider_group.size(); i++){
        Spider s = spider_group.get(i);
-       println(s.range);
-       s.walk2();
+       s.walk();
      }
    }
 }
@@ -48,31 +47,9 @@ class Spider{
     spriteWidth = images[0].width;
     
   }
+
   void walk(){
     frame = (frame+1) % (2*slow);
-    if (frameCount % 240==0){
-      direction = !direction;
-    }
-    if (direction){
-      x -= .75;
-      image(images[frame/slow], x + 500, y);
-    }
-    else{
-      x += .75;
-      
-      pushMatrix();
-      translate(x,0);
-      scale(-1.0, 1.0);
-      
-      image(images[frame/slow], -images[0].width, y);
-      popMatrix();
-
-    }   
-    
-  }
-  void walk2(){
-    frame = (frame+1) % (2*slow);
-    println(x , original_x , original_x - range);
     if ((x >= (original_x + range) )^( x <= (original_x - range))){
       direction = !direction;
       }

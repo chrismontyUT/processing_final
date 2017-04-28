@@ -12,8 +12,8 @@ ItemGroup itemlevel1;
 void setup(){
   surface.setResizable(true);
   img = loadImage("level1.bmp");
-  println(img.width);
-  println(img.height);
+ // println(img.width);
+ // println(img.height);
   size(1230,680);
   protagonist = new Protagonist();
   enemiesLevel1 = new EnemyGroup();
