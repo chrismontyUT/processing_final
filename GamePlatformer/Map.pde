@@ -1,5 +1,6 @@
 class Map{
   boolean level1;
+  boolean[][] metal = new boolean[27][20];
   
   Tile[][] tiles;
   Map(int mapSizeX, int mapSizeY){
@@ -17,6 +18,7 @@ class Map{
     
   void add_tile(int x , int y){
     tiles[x][y] = new TileMetal(x,y);
+    metal[x][y] = true;
   }
   
   

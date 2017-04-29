@@ -10,7 +10,7 @@ int level = 1;
 void setup() {
   surface.setResizable(true);
   size(1230, 675);
-  player = new Player(1, 4, "player", 11);
+  player = new Player(1, 1, "player", 11);
   enemiesLevel1 = new EnemyGroup();
   enemiesLevel2 = new EnemyGroup();
   enemiesLevel3 = new EnemyGroup();
@@ -63,13 +63,14 @@ void setup() {
 
 void draw() { 
  background(0);
- //scale(.5);
  if (level == 1){
     map1.display();
+    scale(.5);
     enemiesLevel1.enemy_run();    
  }
  else if (level == 2){
    map2.display();
+   scale(.5);
    enemiesLevel2.enemy_run();
  }
  
@@ -93,6 +94,14 @@ void draw() {
  }else {
   player.fallVelocity =0;
   player.stand();
-} 
+}
+//println("current x tile:" + (player.playerX / 70) + "current y tile:" + (player.playerY / 70)); 
+//println("tile below is metal?:" + map1.metal[player.playerX/70][(player.playerY/70)+1]);
+for (int i = 0; i<27;i++){
+  for(int j=0; j<20; j++){
+    println("map["+ (player.playerX / 70)+ "][" + ((player.playerY / 70) + 1) + "]:" + map1.metal[i][j]);
+    }
 
+
+  }
 }

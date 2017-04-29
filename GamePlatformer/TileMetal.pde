@@ -4,6 +4,7 @@ class TileMetal extends Tile{
   {
     super(xLocation, yLocation);
     image = loadImage("metal.png");
+    boolean isMetal = true;
   }
   
   void display()
@@ -16,4 +17,5 @@ class TileMetal extends Tile{
   {
     return true;
   }
+
 }

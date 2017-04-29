@@ -4,6 +4,7 @@ class TileBlack extends Tile{
   {
     super(xLocation, yLocation);
     image = loadImage("black.png");
+   
   }
   
   void display()
@@ -15,4 +16,5 @@ class TileBlack extends Tile{
   {
     return true;
   }
+  
 }

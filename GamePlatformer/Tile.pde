@@ -1,9 +1,9 @@
-abstract class Tile
-{
+abstract class Tile{
   int size = 45;
   int xLocation;
   int yLocation;
   PImage image;
+  boolean isMetal = false;
   
   public Tile(int xLocation, int yLocation)
   { 

@@ -16,8 +16,8 @@ class Player{
   boolean falling;
   Player(int startX, int startY, String imagePrefix, int count)
   {
-    playerX = startX * 70;
-    playerY = startY * 70;
+    playerX = startX;
+    playerY = startY;
     imageCount = count;
     images = new PImage[imageCount];
 
@@ -42,6 +42,12 @@ class Player{
   {
     return playerY;
   }
+  int currentX_tile(){
+    return (playerX / 70);
+  }
+  int currentY_tile(){
+    return (playerY / 70);
+  }
   
   
    void walk() {
@@ -53,6 +59,8 @@ class Player{
       velocity.x = 3;
 
     playerX += velocity.x;
+
+    
   }
   
    void walkBackwards() {
@@ -75,7 +83,7 @@ class Player{
   }
   void duck() { 
     fallVelocity += 1;
-    playerX += velocity.x;
+  //  playerX += velocity.x;      // why is this here??? this line moves him in the x direction while ducking
     if (velocity.x>0)
     {
       image(duck, playerX, playerY+20);
@@ -114,5 +122,8 @@ class Player{
   {
     image(images[frame], playerX, playerY);
   }
-  
+  //public boolean canMove(){
+    
+  //}
+    
 }
