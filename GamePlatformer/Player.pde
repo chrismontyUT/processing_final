@@ -14,6 +14,11 @@ class Player{
   int ypos;//this is the top left corner
   PVector velocity;
   boolean falling;
+  boolean top_left;  //true if top left corner of player is occupied by a metal tile
+  boolean top_right;  // true if top right corner of player is occupied by a metal tile
+  boolean bottom_left; // true if bottom left corner of player is occupied by a metal tile
+  boolean bottom_right; //true if bottom right corner of player is occupied by a metal tile
+  
   Player(int startX, int startY, String imagePrefix, int count)
   {
     playerX = startX;
@@ -33,7 +38,7 @@ class Player{
     velocity = new PVector(0, 0);
   }
   
-  int getPlayerX()
+  public int getPlayerX()
   {
     return playerX;
   }
@@ -42,11 +47,15 @@ class Player{
   {
     return playerY;
   }
-  int currentX_tile(){
-    return (playerX / 70);
+  public int currentX_tile(){                                      //measures current tile from the pixel at the top of the sprite and 1/2 it's width
+    return ((playerX + (images[0].width / 2)) / 90);                // which is approximately at the center of the top of the helmet
+  }                                                                // this is to make falling occur earlier and look more natural
+  public int currentY_tile(){
+    return (playerY  / 90);
+  
   }
-  int currentY_tile(){
-    return (playerY / 70);
+  public int overshoot(){
+   return (playerY % 90); 
   }
   
   
@@ -57,10 +66,11 @@ class Player{
 
     if (velocity.x > 3)
       velocity.x = 3;
-
+      
+    if(map1.top_right_of_player() == true){
+      velocity.x = 0;
+      }
     playerX += velocity.x;
-
-    
   }
   
    void walkBackwards() {
@@ -107,7 +117,6 @@ class Player{
       playerX = 0;
       velocity.x = -velocity.x;
     }
-
     if (velocity.x>0)
     {
       image(fall, playerX, playerY+2);
@@ -117,13 +126,62 @@ class Player{
       image(fall, -playerX-70, playerY+2);
     }
   }
-
+  void correct(){
+    if (map1.bottom_right_of_player() == true){
+      playerY -= (overshoot() + 1);
+    }
+  }
   void display()
   {
     image(images[frame], playerX, playerY);
   }
-  //public boolean canMove(){
-    
-  //}
-    
+  boolean can_fall(){      //returns true if the tile beneath the player is black and the player can fall
+      if(level == 1){
+        if(map1.metal[currentX_tile()][currentY_tile() + 1] == false){
+          return true;
+        }
+      
+        else{
+          return false;
+        }
+      }
+      if(level == 2){
+        if(map2.metal[currentX_tile()][currentY_tile() + 1] == false){
+          return true;
+        }
+      
+        else{
+          return false;
+        }
+      }
+      if(level == 3){
+        if(map3.metal[currentX_tile()][currentY_tile() + 1] == false){
+          return true;
+        }
+      
+        else{
+          return false;
+        }
+      }
+      else{
+        if(map4.metal[currentX_tile()][currentY_tile() + 1] == false){
+          return true;
+        }
+      
+        else{
+          return false;
+        }
+      }
+    }
+  public boolean canMove(){
+    if(can_fall() == true){
+      fall();
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+  
+  
 }

@@ -31,5 +31,40 @@ class Map{
        }
      }
    }
+  public boolean top_left_of_player(){                    //returns true if top left corner of player is occupied by a metal tile
+    if(metal[player.playerX / 90][player.playerY / 90] == true){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  public boolean top_right_of_player(){                    // returns true if top right corner of player is occupied by a metal tile
+    if(metal[(player.playerX + player.images[0].width) / 90][player.playerY / 90] == true){
+      return true;
+     }
+     else{
+       return false;
+     }
+  }
+  public boolean bottom_left_of_player(){                  //returns true if bottom left corner of player is occupied by a metal tile
+    if(metal[player.playerX / 90][(player.playerY + player.images[0].height) / 90] == true){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  public boolean bottom_right_of_player(){                //returns true if the bottom right corner of the player is occuoied by a metal tile
+    if(metal[(player.playerX + player.images[0].width) / 90][(player.playerY + player.images[0].height) / 90] == true){
+      return true;
+    }
+    else{
+       return false;
+    }
+  }
+  
   
 }
+  
+ 
