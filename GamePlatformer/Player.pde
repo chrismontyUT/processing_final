@@ -1,5 +1,5 @@
-class Player{
-  
+class Player {
+
   int playerX;
   int playerY;
   int health = 10;
@@ -18,7 +18,7 @@ class Player{
   boolean top_right;  // true if top right corner of player is occupied by a metal tile
   boolean bottom_left; // true if bottom left corner of player is occupied by a metal tile
   boolean bottom_right; //true if bottom right corner of player is occupied by a metal tile
-  
+
   Player(int startX, int startY, String imagePrefix, int count)
   {
     playerX = startX;
@@ -30,19 +30,24 @@ class Player{
       // Use nf() to number format 'i' into two digits
       String filename = imagePrefix + nf(i, 2) + ".png";
       images[i] = loadImage(filename);
+      images[i].resize(0, 89);
     }
     fall = loadImage("alienGreen_swim1.png");
+    fall.resize(0, 89);
     stand = loadImage("p1_front.png");
+    stand.resize(0, 89);
     jump = loadImage("p1_jump.png");
+    jump.resize(0, 89);
     duck = loadImage("p1_duck.png");
+    duck.resize(0, 89);
     velocity = new PVector(0, 0);
   }
-  
+
   public int getPlayerX()
   {
     return playerX;
   }
-  
+
   public int getPlayerY()
   {
     return playerY;
@@ -56,10 +61,11 @@ class Player{
   }
   public int overshoot(){
    return (playerY % 90); 
+
   }
-  
-  
-   void walk() {
+
+
+  void walk() {
     frame = (frame+1) % (11*slow);
     image(images[frame/slow], playerX, playerY);
     velocity.x += 1;
@@ -71,9 +77,10 @@ class Player{
       velocity.x = 0;
       }
     playerX += velocity.x;
+
   }
-  
-   void walkBackwards() {
+
+  void walkBackwards() {
     scale(-1, 1);
     frame = (frame+1) % (11*slow);
     image(images[frame/slow], -playerX - 70, playerY);
@@ -81,19 +88,32 @@ class Player{
 
     if (velocity.x < -3)
       velocity.x = -3;
-
+    if (map1.top_left_of_player() == true) {
+      velocity.x = 0;
+    }
     playerX += velocity.x;
     if (playerX<0) {
       playerX = 0;
     }
   }
   void jump() {
-    fallVelocity = -8;
+    fallVelocity = -10;
+
+    /*if (map1.top_left_of_player() == true) { 
+     velocity.y = 0;
+     }
+     if (map1.top_right_of_player() == true) {
+     velocity.y = 0;
+     }
+     if (map1.bottom_left_of_player() == true ^ map1.bottom_right_of_player() == true)
+     {
+     velocity.x = 0;
+     }*/
     fall();
   }
   void duck() { 
     fallVelocity += 1;
-  //  playerX += velocity.x;      // why is this here??? this line moves him in the x direction while ducking
+    // playerX += velocity.x;      // why is this here??? this line moves him in the x direction while ducking
     if (velocity.x>0)
     {
       image(duck, playerX, playerY+20);
@@ -112,9 +132,42 @@ class Player{
     if (fallVelocity>3) {
       fallVelocity = 3;
     }
+
+    if (map1.top_left_of_player() == true || map1.bottom_left_of_player() == true) { //checks if top corners are in a metal tile
+      if (velocity.x < 0) {
+        velocity.x = -velocity.x;
+      }
+    }
+    if (map1.top_right_of_player() == true || map1.bottom_right_of_player() == true) { //checks if top corners are in a metal tile
+      if (velocity.x > 0) {
+        velocity.x = -velocity.x;
+      }
+    }
+
+  /*  if (map1.top_left_of_player() == true || map1.top_right_of_player() == true) { //checks if top corners are in a metal tile
+      if (velocity.y > 0) {
+        velocity.y = -velocity.y;
+      }
+    }
+    
+    if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
+     velocity.y = 0;
+     }
+     
+     if (velocity.x < 0 && map1.bottom_left_of_player() == true) {
+     velocity.x = 0;
+     }
+     if (velocity.x > 0 && map1.bottom_right_of_player() == true) {
+     velocity.x = 0;
+     }*/
     playerX += velocity.x;
-    if (playerX<0) {
+    if (playerX<0) {   //prevents player from walking off the screen to the left
       playerX = 0;
+      velocity.x = -velocity.x;
+    }
+
+    if (playerX + images[0].width>2430) {   //prevents player from walking off the screen to the right... 2430 because we scaled it by .5
+      playerX = 2430- images[0].width;
       velocity.x = -velocity.x;
     }
     if (velocity.x>0)
@@ -152,4 +205,5 @@ class Player{
     }
   }
   
+
 }

@@ -47,6 +47,7 @@ class Map {
   }
   public boolean bottom_left_of_player(){                  //returns true if bottom left corner of player is occupied by a metal tile
     if(tiles[player.playerX / 90][(player.playerY + player.images[0].height) / 90].type == 1){
+
       return true;
     }
     else{
@@ -55,6 +56,7 @@ class Map {
   }
   public boolean bottom_right_of_player(){                //returns true if the bottom right corner of the player is occuoied by a metal tile
     if(tiles[(player.playerX + player.images[0].width) / 90][(player.playerY + player.images[0].height) / 90].type == 1){
+
       return true;
     }
     else{

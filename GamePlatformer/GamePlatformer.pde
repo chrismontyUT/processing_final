@@ -63,6 +63,7 @@ void draw() {
  scale(0.5);
  // Update enemies for the current level
  enemiesLevel1.enemy_run();
+ 
  if(player.canMove()){
  if (keyPressed){
   if (key == CODED && keyCode == RIGHT) {
@@ -87,13 +88,4 @@ void draw() {
   player.stand();
   }
  }
-//println("current x tile:" + (player.currentX_tile()) + "current y tile:" + (player.currentY_tile())); 
-
-//println("tile below is metal?:" + map1.metal[player.currentX_tile()][player.currentY_tile() + 1]);
-//println(player.can_fall());
-//println(player.fallVelocity);
-
-//println(player.playerY , player.overshoot());
-//println(map1.bottom_right_of_player());
-
 }
