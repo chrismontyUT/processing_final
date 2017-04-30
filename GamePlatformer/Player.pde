@@ -159,12 +159,14 @@ class Player {
       scale(-1, 1);
       image(fall, -playerX-70, playerY+2);
     }
-  }
- /* void correct() {
-    if (map1.bottom_right_of_player() == true) {
-      playerY -= (overshoot() + 1);
+    correct();  
+}
+  void correct() {
+    if (map1.bottom_right_of_player() == true && can_fall() == false) {
+      playerY -= (overshoot() + 1); //number of pixels past the tile
     }
-  }*/
+  }
+
   void display()
   {
     image(images[frame], playerX, playerY);

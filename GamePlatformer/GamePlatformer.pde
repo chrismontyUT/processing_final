@@ -98,6 +98,6 @@ void draw() {
   }
  }
 
-println(player.playerX + player.images[0].width);
+println(player.playerY + player.images[0].height - 8);
 
 }
