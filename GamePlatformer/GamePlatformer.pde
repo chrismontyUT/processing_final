@@ -1,4 +1,5 @@
 Map levels[] = new Map[4];
+EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player;
 Spider spider;
 EnemyGroup enemiesLevel1;
@@ -16,28 +17,18 @@ void setup() {
   enemiesLevel2 = new EnemyGroup();
   enemiesLevel3 = new EnemyGroup();
   enemiesLevel4 = new EnemyGroup();
+  for (int i = 0; i<4 ; i++){
+    spider_group[i] = new EnemyGroup();
+  }
   Table spider_list = loadTable("spiders.csv" , "header");
   for(TableRow row : spider_list.rows()){
-    float table_level = row.getFloat("level");
+    int table_level = row.getInt("level");
     float x_pos = row.getFloat("x.pos");
     float y_pos = row.getFloat("y.pos");
     float x_range = row.getFloat("x_range");
-    if(table_level == 1){
-      enemiesLevel1.addspider(x_pos , y_pos , level , x_range);
-    }
-    else if (table_level == 2){
-      enemiesLevel2.addspider(x_pos, y_pos , level , x_range);
-
-    }
-    else if (table_level == 3){
-      enemiesLevel3.addspider(x_pos , y_pos , level , x_range);
-
-    }
-    else if (table_level == 4){
-      enemiesLevel4.addspider(x_pos , y_pos , level , x_range);
-    }
+    spider_group[table_level - 1].addspider(x_pos,y_pos, level , x_range);
   }
-  
+
   // Initialize each level in the levels array
   for(int i = 0; i < 4; i++) {
     levels[i] = new Map(27, 20);
@@ -62,7 +53,7 @@ void draw() {
  // Set scaling to 0.5
  scale(0.5);
  // Update enemies for the current level
- enemiesLevel1.enemy_run();
+  spider_group[level - 1].enemy_run();
  
  if(player.canMove()){
  if (keyPressed){

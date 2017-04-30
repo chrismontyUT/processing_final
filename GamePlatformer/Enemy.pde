@@ -8,7 +8,7 @@ class EnemyGroup{
 
    }
    
-   void addspider(float x_pos , float y_pos , float level , float range){
+   void addspider(float x_pos , float y_pos , int level , float range){
       spider_group.add(new Spider(x_pos , y_pos , level , range));
  }
    void enemy_run(){
