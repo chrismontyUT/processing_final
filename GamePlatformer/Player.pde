@@ -88,7 +88,7 @@ class Player {
 
     if (velocity.x < -3)
       velocity.x = -3;
-    if (map1.top_left_of_player() == true) {
+    if (levels[level - 1].top_left_of_player() == true) {
       velocity.x = 0;
     }
     playerX += velocity.x;
@@ -133,12 +133,12 @@ class Player {
       fallVelocity = 3;
     }
 
-    if (map1.top_left_of_player() == true || map1.bottom_left_of_player() == true) { //checks if top corners are in a metal tile
+    if (levels[level-1].top_left_of_player() == true || levels[level-1].bottom_left_of_player() == true) { //checks if top corners are in a metal tile
       if (velocity.x < 0) {
         velocity.x = -velocity.x;
       }
     }
-    if (map1.top_right_of_player() == true || map1.bottom_right_of_player() == true) { //checks if top corners are in a metal tile
+    if (levels[level-1].top_right_of_player() == true || levels[level-1].bottom_right_of_player() == true) { //checks if top corners are in a metal tile
       if (velocity.x > 0) {
         velocity.x = -velocity.x;
       }
