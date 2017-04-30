@@ -99,5 +99,6 @@ void draw() {
  }
 
 println(player.playerY + player.images[0].height - 8);
+println(player.images[0].height);
 
 }

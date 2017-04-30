@@ -30,11 +30,16 @@ class Player {
       // Use nf() to number format 'i' into two digits
       String filename = imagePrefix + nf(i, 2) + ".png";
       images[i] = loadImage(filename);
+      images[i].resize(0, 89);
     }
     fall = loadImage("alienGreen_swim1.png");
+    fall.resize(0, 89);
     stand = loadImage("p1_front.png");
+    stand.resize(0, 89);
     jump = loadImage("p1_jump.png");
+    jump.resize(0, 89);
     duck = loadImage("p1_duck.png");
+    duck.resize(0, 89);
     velocity = new PVector(0, 0);
   }
 
@@ -128,10 +133,16 @@ class Player {
     if (fallVelocity>3) {
       fallVelocity = 3;
     }
-   /* if (map1.top_left_of_player() == true || map1.top_right_of_player() == true) { //checks if top corners are in a metal tile
-      velocity.x = 0;
-    }
 
+   if (map1.top_left_of_player() == true || map1.bottom_left_of_player() == true) { //checks if top corners are in a metal tile
+      if (velocity.x < 0) {
+        velocity.x = -velocity.x;
+    }   }
+    if (map1.top_right_of_player() == true || map1.bottom_right_of_player() == true) { //checks if top corners are in a metal tile
+      if (velocity.x > 0) {
+        velocity.x = -velocity.x;
+    }   }
+/*
     if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
       velocity.y = 0;
     }
@@ -159,13 +170,8 @@ class Player {
       scale(-1, 1);
       image(fall, -playerX-70, playerY+2);
     }
-    correct();  
+  
 }
-  void correct() {
-    if (map1.bottom_right_of_player() == true && can_fall() == false) {
-      playerY -= (overshoot() + 1); //number of pixels past the tile
-    }
-  }
 
   void display()
   {

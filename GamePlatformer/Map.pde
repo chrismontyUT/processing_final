@@ -11,18 +11,12 @@ class Map{
        tiles[x][y] = new TileBlack(x,y);
        }
      }  
-    }
-    
-    
-    
+    } 
     
   void add_tile(int x , int y){
     tiles[x][y] = new TileMetal(x,y);
     metal[x][y] = true;
   }
-  
-  
-  
   
   void display(){
     for(Tile[] x: tiles){
@@ -48,7 +42,7 @@ class Map{
      }
   }
   public boolean bottom_left_of_player(){                  //returns true if bottom left corner of player is occupied by a metal tile
-    if(metal[player.playerX / 90][(player.playerY + player.images[0].height - 8) / 90] == true){
+    if(metal[player.playerX / 90][(player.playerY + player.images[0].height) / 90] == true){
       return true;
     }
     else{
@@ -56,7 +50,7 @@ class Map{
     }
   }
   public boolean bottom_right_of_player(){                //returns true if the bottom right corner of the player is occuoied by a metal tile
-    if(metal[(player.playerX + player.images[0].width) / 90][(player.playerY + player.images[0].height - 8) / 90] == true){
+    if(metal[(player.playerX + player.images[0].width) / 90][(player.playerY + player.images[0].height) / 90] == true){
       return true;
     }
     else{
