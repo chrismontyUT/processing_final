@@ -52,16 +52,14 @@ class Player {
   {
     return playerY;
   }
-  public int currentX_tile(){                                      //measures current tile from the pixel at the top of the sprite and 1/2 it's width
+  public int currentX_tile() {                                      //measures current tile from the pixel at the top of the sprite and 1/2 it's width
     return ((playerX + (images[0].width / 2)) / 90);                // which is approximately at the center of the top of the helmet
   }                                                                // this is to make falling occur earlier and look more natural
-  public int currentY_tile(){
+  public int currentY_tile() {
     return (playerY  / 90);
-  
   }
-  public int overshoot(){
-   return (playerY % 90); 
-
+  public int overshoot() {
+    return (playerY % 90);
   }
 
 
@@ -72,12 +70,11 @@ class Player {
 
     if (velocity.x > 3)
       velocity.x = 3;
-      
-    if(levels[level-1].top_right_of_player() == true){
-      velocity.x = 0;
-      }
-    playerX += velocity.x;
 
+    if (levels[level-1].top_right_of_player() == true) {
+      velocity.x = 0;
+    }
+    playerX += velocity.x;
   }
 
   void walkBackwards() {
@@ -127,11 +124,6 @@ class Player {
     image(stand, playerX, playerY+2);
   }
   void fall() {
-    playerY += fallVelocity;
-    fallVelocity += fallGravity;
-    if (fallVelocity>3) {
-      fallVelocity = 3;
-    }
 
     if (levels[level-1].top_left_of_player() == true || levels[level-1].bottom_left_of_player() == true) { //checks if top corners are in a metal tile
       if (velocity.x < 0) {
@@ -144,13 +136,13 @@ class Player {
       }
     }
 
-  /*  if (map1.top_left_of_player() == true || map1.top_right_of_player() == true) { //checks if top corners are in a metal tile
-      if (velocity.y > 0) {
-        velocity.y = -velocity.y;
-      }
-    }
-    
-    if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
+    /*  if (map1.top_left_of_player() == true || map1.top_right_of_player() == true) { //checks if top corners are in a metal tile
+     if (velocity.y > 0) {
+     velocity.y = -velocity.y;
+     }
+     }
+     
+     if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
      velocity.y = 0;
      }
      
@@ -170,40 +162,69 @@ class Player {
       playerX = 2430- images[0].width;
       velocity.x = -velocity.x;
     }
+
+
     if (velocity.x>0)
     {
-      image(fall, playerX, playerY+2);
+      image(fall, playerX, playerY+2); //fall right
     } else
     {
       scale(-1, 1);
-      image(fall, -playerX-70, playerY+2);
+      image(fall, -playerX-70, playerY+2); //flip image and fall left
     }
-  }
-  void correct(){
-    if (levels[level-1].bottom_right_of_player() == true){
-      playerY -= (overshoot() + 1);
+    playerY += fallVelocity;
+    fallVelocity += fallGravity;
+    if (fallVelocity>3) {
+      fallVelocity = 3;
     }
+    fallDir();
   }
-  void display()
-  {
-    image(images[frame], playerX, playerY);
-  }
-  boolean can_fall() {      //returns true if the tile beneath the player is black and the player can fall
-    if(levels[level-1].tiles[currentX_tile()][currentY_tile() + 1].type == 0){
-      return true;
+
+    void fallDir() {
+      if (keyPressed) {
+        if (key == CODED && keyCode == RIGHT) {
+          image(fall, playerX, playerY+2);
+          playerY += fallVelocity;
+          fallVelocity += fallGravity;
+          if (fallVelocity>3) {
+            fallVelocity = 3;
+          }
+          if (fallVelocity > 0) {
+            velocity.x = velocity.x;
+          }
+        }
+        if (key == CODED && keyCode == LEFT) { //if the user presses left, while falling, the sprite should change directions of falling to left
+          scale(-1, 1);
+          image(fall, -playerX-70, playerY+2);
+          playerY += fallVelocity;
+          fallVelocity += fallGravity;
+          if (fallVelocity>3) {
+            fallVelocity = 3;
+          }
+          if (fallVelocity >0) {
+            velocity.x = -velocity.x;
+          }
+        }
+      }
     }
-    return false;
-  }
-  
-  public boolean canMove() {
-    if(can_fall() == true) {
-      fall();
+    
+    void display()
+    {
+      image(images[frame], playerX, playerY);
+    }
+    boolean can_fall() {      //returns true if the tile beneath the player is black and the player can fall
+      if (levels[level-1].tiles[currentX_tile()][currentY_tile() + 1].type == 0) {
+        return true;
+      }
       return false;
     }
-    else {
-      return true;
+
+    public boolean canMove() {
+      if (can_fall() == true) {
+        fall();
+        return false;
+      } else {
+        return true;
+      }
     }
   }
-  
-
-}

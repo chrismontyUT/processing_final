@@ -25,6 +25,7 @@ class Map {
     image_final.copy(image_metal, 0, 0, 45, 45, x * 45, y * 45, 45, 45);
   }
   
+  
   void display() {
     image(image_final, 0, 0);
   }

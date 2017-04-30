@@ -1,6 +1,8 @@
 // Tiles types:
 // 0 - Black
 // 1 - Metal
+// 2 - door bottom
+// 3 - door top
 
 class Tile{
   int size = 45;
