@@ -4,6 +4,9 @@ class Map {
   
   PImage image_black = loadImage("black.png");
   PImage image_metal = loadImage("metal.png");
+  // This is the final image that we render each frame, compositied from
+  // the individual tiles.
+  PImage image_final = createImage(1215, 675, RGB);
   
   Map(int mapSizeX, int mapSizeY) {
     tiles = new Tile[mapSizeX][mapSizeY];
@@ -12,34 +15,21 @@ class Map {
       for(int y = 0; y < mapSizeY; y++) {  
         tiles[x][y] = new Tile(x, y, 0);
       }
-    }  
+    }
+    image_metal.resize(45, 45);
   }
   
   void add_tile(int x , int y, int type) {
     tiles[x][y] = new Tile(x, y, type);
+    // Copy pixels to the correct spot image_final from the tile image
+    image_final.copy(image_metal, 0, 0, 45, 45, x * 45, y * 45, 45, 45);
   }
   
   void display() {
-    
-    // Iterate through all tiles
-    for(Tile[] row: tiles) {
-      for(Tile tile: row) {
-        // Choose image to display based on tile type
-        switch(tile.type) {
-          case 0:
-            image(image_black, tile.x * tile.size, tile.y * tile.size, tile.size, tile.size);
-            break;
-          case 1:
-            image(image_metal, tile.x * tile.size, tile.y * tile.size, tile.size, tile.size);
-            break;
-          default:
-            break;
-        }
-      }
-    }  
+    image(image_final, 0, 0);
   }
   
-  public boolean top_left_of_player(){                    //returns true if top left corner of player is occupied by a metal tile
+  boolean top_left_of_player(){                    //returns true if top left corner of player is occupied by a metal tile
     if(tiles[player.playerX / 90][player.playerY / 90].type == 1){
       return true;
     }

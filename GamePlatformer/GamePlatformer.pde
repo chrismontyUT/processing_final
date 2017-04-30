@@ -8,6 +8,7 @@ EnemyGroup enemiesLevel4;
 int level = 1;
 
 void setup() {
+  frameRate(60);
   surface.setResizable(true);
   size(1215, 675);
   player = new Player(1, 1, "player", 11);
