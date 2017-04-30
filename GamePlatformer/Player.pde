@@ -95,26 +95,26 @@ class Player {
     playerX += velocity.x;
     if (playerX<0) {
       playerX = 0;
-    } 
+    }
   }
   void jump() {
     fallVelocity = -10;
-    
+
     /*if (map1.top_left_of_player() == true) { 
-      velocity.y = 0;
-    }
-    if (map1.top_right_of_player() == true) {
-      velocity.y = 0;
-    }
-    if (map1.bottom_left_of_player() == true ^ map1.bottom_right_of_player() == true)
-    {
-      velocity.x = 0;
-    }*/
+     velocity.y = 0;
+     }
+     if (map1.top_right_of_player() == true) {
+     velocity.y = 0;
+     }
+     if (map1.bottom_left_of_player() == true ^ map1.bottom_right_of_player() == true)
+     {
+     velocity.x = 0;
+     }*/
     fall();
   }
   void duck() { 
     fallVelocity += 1;
-     // playerX += velocity.x;      // why is this here??? this line moves him in the x direction while ducking
+    // playerX += velocity.x;      // why is this here??? this line moves him in the x direction while ducking
     if (velocity.x>0)
     {
       image(duck, playerX, playerY+20);
@@ -134,25 +134,33 @@ class Player {
       fallVelocity = 3;
     }
 
-   if (map1.top_left_of_player() == true || map1.bottom_left_of_player() == true) { //checks if top corners are in a metal tile
+    if (map1.top_left_of_player() == true || map1.bottom_left_of_player() == true) { //checks if top corners are in a metal tile
       if (velocity.x < 0) {
         velocity.x = -velocity.x;
-    }   }
+      }
+    }
     if (map1.top_right_of_player() == true || map1.bottom_right_of_player() == true) { //checks if top corners are in a metal tile
       if (velocity.x > 0) {
         velocity.x = -velocity.x;
-    }   }
-/*
-    if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
-      velocity.y = 0;
+      }
+    }
+
+  /*  if (map1.top_left_of_player() == true || map1.top_right_of_player() == true) { //checks if top corners are in a metal tile
+      if (velocity.y > 0) {
+        velocity.y = -velocity.y;
+      }
     }
     
-    if (velocity.x < 0 && map1.bottom_left_of_player() == true) {
-      velocity.x = 0;
-    }
-    if (velocity.x > 0 && map1.bottom_right_of_player() == true) {
-      velocity.x = 0;
-    }*/
+    if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
+     velocity.y = 0;
+     }
+     
+     if (velocity.x < 0 && map1.bottom_left_of_player() == true) {
+     velocity.x = 0;
+     }
+     if (velocity.x > 0 && map1.bottom_right_of_player() == true) {
+     velocity.x = 0;
+     }*/
     playerX += velocity.x;
     if (playerX<0) {   //prevents player from walking off the screen to the left
       playerX = 0;
@@ -170,8 +178,7 @@ class Player {
       scale(-1, 1);
       image(fall, -playerX-70, playerY+2);
     }
-  
-}
+  }
 
   void display()
   {
