@@ -1,4 +1,4 @@
-Map map1 , map2 , map3 , map4;
+Map levels[] = new Map[4];
 Player player;
 Spider spider;
 EnemyGroup enemiesLevel1;
@@ -8,6 +8,7 @@ EnemyGroup enemiesLevel4;
 int level = 1;
 
 void setup() {
+  frameRate(60);
   surface.setResizable(true);
   size(1215, 675);
   player = new Player(1, 1, "player", 11);
@@ -35,44 +36,34 @@ void setup() {
     else if (table_level == 4){
       enemiesLevel4.addspider(x_pos , y_pos , level , x_range);
     }
-   }
+  }
   
-  map1 = new Map(27, 20);
-  map2 = new Map(27,20);
-  map3 = new Map(27,20);
-  map4 = new Map(27,20);
+  // Initialize each level in the levels array
+  for(int i = 0; i < 4; i++) {
+    levels[i] = new Map(27, 20);
+  }
+  // Load Tiles csv into each map
   Table tiles = loadTable("tiles.csv" , "header");
-  for(TableRow row : tiles.rows()){
-    int level_ = row.getInt("level");
+  for(TableRow row : tiles.rows()) {
+    
+    int level_num = row.getInt("level");
     int x_pos = row.getInt("x");
     int y_pos = row.getInt("y");
-    if (level_ == 1){
-      map1.add_tile(x_pos , y_pos);
-    }
-    else if (level_ == 2){
-      map2.add_tile(x_pos, y_pos);
-    }   
-    else if (level_ == 3){
-      map3.add_tile(x_pos, y_pos);
-    }
-    else if (level_ == 4){
-      map4.add_tile(x_pos, y_pos);
-    }
+    // Add a metal tile where specified in the csv file
+    levels[level_num-1].add_tile(x_pos , y_pos, 1); // (subtract 1 to match array index)
   }
 }
 
 void draw() { 
+ // Set backgroud color to black
  background(0);
- if (level == 1){
-    map1.display();
-    scale(.5);
-    enemiesLevel1.enemy_run();    
- }
- else if (level == 2){
-   map2.display();
-   scale(.5);
-   enemiesLevel2.enemy_run();
- }
+ // Display the map for the current level
+ levels[level-1].display();
+ // Set scaling to 0.5
+ scale(0.5);
+ // Update enemies for the current level
+ enemiesLevel1.enemy_run();
+ 
  if(player.canMove()){
  if (keyPressed){
   if (key == CODED && keyCode == RIGHT) {
@@ -97,8 +88,4 @@ void draw() {
   player.stand();
   }
  }
-
-println(player.playerY + player.images[0].height - 8);
-println(player.images[0].height);
-
 }

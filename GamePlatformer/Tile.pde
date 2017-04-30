@@ -1,17 +1,22 @@
-abstract class Tile{
+// Tiles types:
+// 0 - Black
+// 1 - Metal
+
+class Tile{
   int size = 45;
-  int xLocation;
-  int yLocation;
-  PImage image;
-  boolean isMetal = false;
+  int x, y;
+  int type;
+  boolean isMetal = false; // TODO: What is this for?
   
-  public Tile(int xLocation, int yLocation)
-  { 
-    this.xLocation = xLocation;
-    this.yLocation = yLocation;
+  public Tile(int x, int y, int type) { 
+    this.x = x;
+    this.y = y;
+    this.type = type;
   }
   
+  boolean checkCollision(Player player) {
+    return false;
+    // TODO: Check if this should actually be here. 
+  }
 
-  abstract void display();
-  abstract boolean checkCollision(Player player);
 }

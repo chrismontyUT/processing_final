@@ -52,14 +52,16 @@ class Player {
   {
     return playerY;
   }
-  public int currentX_tile() {                                      //measures current tile from the pixel at the top of the sprite and 1/2 it's width
+  public int currentX_tile(){                                      //measures current tile from the pixel at the top of the sprite and 1/2 it's width
     return ((playerX + (images[0].width / 2)) / 90);                // which is approximately at the center of the top of the helmet
   }                                                                // this is to make falling occur earlier and look more natural
-  public int currentY_tile() {
+  public int currentY_tile(){
     return (playerY  / 90);
+  
   }
-  public int overshoot() {
-    return (playerY % 90);
+  public int overshoot(){
+   return (playerY % 90); 
+
   }
 
 
@@ -70,15 +72,12 @@ class Player {
 
     if (velocity.x > 3)
       velocity.x = 3;
-
-    if (map1.top_right_of_player() == true) {
+      
+    if(levels[level-1].top_right_of_player() == true){
       velocity.x = 0;
-    }
+      }
     playerX += velocity.x;
-    if (playerX + images[0].width>2427) {   //prevents player from walking off the screen to the right... 2430 because we scaled it by .5
-      playerX = 2427- images[0].width;
-      velocity.x = -velocity.x;
-    }
+
   }
 
   void walkBackwards() {
@@ -166,6 +165,7 @@ class Player {
       playerX = 0;
       velocity.x = -velocity.x;
     }
+
     if (playerX + images[0].width>2430) {   //prevents player from walking off the screen to the right... 2430 because we scaled it by .5
       playerX = 2430- images[0].width;
       velocity.x = -velocity.x;
@@ -179,47 +179,31 @@ class Player {
       image(fall, -playerX-70, playerY+2);
     }
   }
-
+  void correct(){
+    if (levels[level-1].bottom_right_of_player() == true){
+      playerY -= (overshoot() + 1);
+    }
+  }
   void display()
   {
     image(images[frame], playerX, playerY);
   }
   boolean can_fall() {      //returns true if the tile beneath the player is black and the player can fall
-    if (level == 1) {
-      if (map1.metal[currentX_tile()][currentY_tile() + 1] == false) {
-        fall();
-        return true;
-      } else {
-        return false;
-      }
+    if(levels[level-1].tiles[currentX_tile()][currentY_tile() + 1].type == 0){
+      return true;
     }
-    if (level == 2) {
-      if (map2.metal[currentX_tile()][currentY_tile() + 1] == false) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-    if (level == 3) {
-      if (map3.metal[currentX_tile()][currentY_tile() + 1] == false) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (map4.metal[currentX_tile()][currentY_tile() + 1] == false) {
-        return true;
-      } else {
-        return false;
-      }
-    }
+    return false;
   }
+  
   public boolean canMove() {
-    if (can_fall() == true) {
+    if(can_fall() == true) {
       fall();
       return false;
-    } else {
+    }
+    else {
       return true;
     }
   }
+  
+
 }
