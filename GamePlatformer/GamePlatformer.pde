@@ -85,8 +85,12 @@ void draw() {
         player.duck();
       }
     }
+    else if (player.falling == false) {
+      player.fallVelocity =0;
+      player.stand();
   }
-  if (player.canMove() == false) {
+  }
+  else if (player.canMove() == false) {
     player.fall();
     if (keyPressed) {
       if (key == CODED && keyCode == RIGHT) {
@@ -107,10 +111,10 @@ void draw() {
       //}
     }
   } 
-  else if (!(keyPressed) && player.falling == false) {
-    player.fallVelocity =0;
-    player.stand();
-  }
+  //else if (!(keyPressed) && player.falling == false) {
+  //  player.fallVelocity =0;
+  //  player.stand();
+  //}
 }
 
 void setitems() {
