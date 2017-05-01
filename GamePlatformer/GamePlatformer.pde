@@ -69,19 +69,19 @@ void draw() {
   if (player.canMove()) {
     if (keyPressed) {
       if (key == CODED && keyCode == RIGHT) {
-        //player.fallVelocity =0;
+        player.fallVelocity =0;
         player.walk();
       }
       if (key == CODED && keyCode == LEFT) {
-        //player.fallVelocity =0;
+        player.fallVelocity =0;
         player.walkBackwards();
       }
       if (key == CODED && keyCode == UP) {
-        //player.fallVelocity =0;
+        player.fallVelocity =0;
         player.jump();
       }
       if (key == CODED && keyCode == DOWN) {
-        //player.fallVelocity =0;
+        player.fallVelocity =0;
         player.duck();
       }
     }
@@ -90,24 +90,24 @@ void draw() {
     player.fall();
     if (keyPressed) {
       if (key == CODED && keyCode == RIGHT) {
-        //player.fallVelocity =0;
+        player.fallVelocity =0;
         player.walk();
       }
       if (key == CODED && keyCode == LEFT) {
-        //player.fallVelocity =0;
+        player.fallVelocity =0;
         player.walkBackwards();
       }
-      if (key == CODED && keyCode == UP) {
-        //player.fallVelocity =0;
-        player.jump();
-      }
-      if (key == CODED && keyCode == DOWN) {
-        //player.fallVelocity =0; //<>//
-        player.duck();
-      }
+      //if (key == CODED && keyCode == UP) {
+      //  player.fallVelocity =0;
+      //  player.jump();
+      //}
+      //if (key == CODED && keyCode == DOWN) {
+      //  player.fallVelocity =0; //<>//
+      //  player.duck();
+      //}
     }
   } else {
-    //player.fallVelocity =0;
+    player.fallVelocity =0;
     player.stand();
   }
 }
