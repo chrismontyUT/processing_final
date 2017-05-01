@@ -1,5 +1,6 @@
 import ddf.minim.*;//
 AudioPlayer soundplayer;
+AudioPlayer backgroundplayer;
 Minim MUS;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
@@ -20,8 +21,10 @@ void setup() {
   surface.setResizable(true);
   size(1215, 675);
   MUS = new Minim(this);
-  //soundplayer = MUS.loadFile("bgm.mp3", 2048);
+  backgroundplayer = MUS.loadFile("background.wav", 2048);
+  backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
+  
   enemiesLevel1 = new EnemyGroup();
   enemiesLevel2 = new EnemyGroup();
   enemiesLevel3 = new EnemyGroup();
