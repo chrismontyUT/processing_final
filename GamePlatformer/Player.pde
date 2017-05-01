@@ -205,5 +205,18 @@ class Player {
     }
   }
   
+  // Used for collision with lasers
+  PVector[] get_corners() {
+    
+     PVector[] corners = new PVector[4];
+     corners[0] = new PVector(playerX, playerY);
+     corners[1] = new PVector(playerX+72, playerY);
+     corners[2] = new PVector(playerX, playerY+97);
+     corners[3] = new PVector(playerX+72, playerY+97);
+     
+     return corners;
+     
+  }
+  
 
 }

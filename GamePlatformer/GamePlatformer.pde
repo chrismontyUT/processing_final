@@ -94,4 +94,8 @@ void draw() {
   player.stand();
   }
  }
+ 
+ if(levels[level-1].check_laser_collisions(player.get_corners())) {
+   println("You ded!");
+ }
 }

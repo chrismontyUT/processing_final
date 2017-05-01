@@ -30,15 +30,12 @@ class Map {
   }
   
   void add_laser(int x, int y, int dir, int range) {
-    println("added laser");
     lasers[num_lasers] = new Laser(x, y, dir, range);
-    println("lasers length: " + lasers.length);
     num_lasers++;
   }
   
   void display() {
     image(image_final, 0, 0);
-    println(num_lasers);
     for(int i = 0; i < num_lasers; i++) {
       lasers[i].display();
     }
@@ -79,6 +76,21 @@ class Map {
     }
   }
   
+  public boolean check_laser_collisions(PVector corners[]) {
+    for(int i = 0; i < 4; i++) {
+      for(int j = 0; j < num_lasers; j++) {
+        if(lasers[j].dir == 0 || lasers[j].dir == 1) {
+          // Check y
+          if(corners[i].y > lasers[j].y*45 + 15 && corners[i].y < lasers[j].y*45 + 30) {
+             if(corners[i].x > lasers[j].x*45+45 && corners[i].x < lasers[j].x*45 + lasers[j].range * 45) {
+               return true;
+             }
+          }
+        }
+      }
+    }
+    return false;
+  }
   
 }
   
