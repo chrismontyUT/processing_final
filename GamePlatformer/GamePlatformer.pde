@@ -29,9 +29,9 @@ void setup() {
   for (int i = 0; i<4 ; i++){
     spider_group[i] = new EnemyGroup();
   }
-  for (int j = 0; j<4 ; j++){ //<>//
+  for (int j = 0; j<4 ; j++){
     itemlevel[j] = new ItemGroup();
-    println(j);
+    //print(j);
   }
   setitems();
   Table spider_list = loadTable("spiders.csv" , "header");
@@ -92,22 +92,20 @@ void draw() {
   player.fallVelocity =0;
   player.stand();
   }
+  
  }
 }
 
 void setitems(){
-  String[] itemtoload = loadStrings("items.csv");;
-  int itemind= 1;
+  String[] itemtoload = loadStrings("items.csv"); 
+  int itemind= 0;
   String[] current;
+  current = split(itemtoload[itemind],',');
+  itemind = itemind + 1;
   while(itemind<itemtoload.length){
     current = split(itemtoload[itemind],',');
-    println(int(current[3]));
-    println(current[0]);
-    println(int(current[0])-1);
     int lev = int(current[0])-1;
-    itemlevel[lev].addItem(int(current[2]),int(current[3]),current[1]); //<>//
-    //itemgroups[0].addItem(int(current[2]),int(current[3]),current[1]);
-    //itemgroups[int(current[0])].addItem(int(current[2]),int(current[3]),current[1]);
+    itemlevel[lev].addItem(int(current[2]),int(current[3]),int(current[4])); //<>//
     itemind = itemind + 1;
   }
 

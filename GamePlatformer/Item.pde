@@ -1,4 +1,4 @@
-float playx;
+float playx; //<>// //<>// //<>// //<>//
 float playy;
 
 
@@ -11,8 +11,10 @@ class ItemGroup {
     //point = 0;
   }
 
-  void addItem(int x, int y, String name) {
-    itemgroups.add(new Item(x, y, name));
+  void addItem(int x, int y, int nameind) {
+
+
+    itemgroups.add(new Item(x, y, nameind));
   }
   void update() {
     playx = player.playerX;
@@ -24,7 +26,7 @@ class ItemGroup {
     for (int i = itemgroups.size()-1; i >= 0; i--) {
       Item p = itemgroups.get(i);
       p.show();
-      println("running");
+      //println("running");
       if (p.isdead == true) {
         itemgroups.remove(i);
       }
@@ -45,74 +47,71 @@ class Item {
   boolean isdead;
   float eff;//for health
   int counter;
-  float timer=0;
-  int len;
+  float timer;
+  int lenofimg;
   String name;
-
-  Item(int x, int y, String nam)
-  {
+  Item(int x, int y, int nameindex){
     ItemX = x;
     ItemY = y;
     wid = player.images[0].width;
     heig = player.images[0].height;
-    name = nam;
     isdead = false;
-    len = 0;
     counter = 1;
-    if (name == "bomb") {
-      len = 2;
+    if (nameindex == 2) { //<>//
+      lenofimg = 2;
+      name = "bomb";
       eff = -0.1;
       points = -1;
     }     
-
-    if (name == "coin") {
-      len = 3;
+    if (nameindex == 4) {
+      lenofimg = 3;
+      name = "coin";
       eff = 0;
       points = 1;
     }
-    if (name == "mushroom") {
-      len = 2;
+    if (nameindex == 1) {
+      lenofimg = 2;
+      name = "mushroom";
       eff = 0.01;
       points = 0;
     }
-    if (name == "gem") {
-      len = 4;
+    if (nameindex == 3) {
+      lenofimg = 4;
+      name = "gem";
       eff = 0.1;
       points = 1;
     }
-    if (name == "key") {
-      len = 4;
+    if (nameindex == 0) {
+      lenofimg = 4;
+      name = "key";
     }
-  }
+    counter = int(random(1,lenofimg+1));
+}
+
   void show() {
-    iscatch();
     timer = timer + 1;
-    if (timer == 5) {
+    if (timer == 20) {
       counter = counter + 1;
       timer = 0;
     }
-    if (counter > len) {
+    if (counter > lenofimg) {
       counter = 1;
     }
-    println(counter);
     appear = loadImage(name+str(counter)+".png");
+    iscatch();
     image(appear, ItemX, ItemY);
   }
 
   void iscatch() {
-    if (points>0) {
-      //playx+wid>= ItemX && playx<=ItemX+appear.width
-      //playy <= ItemY+appear.height && playy+height >= ItemY
-      if (playx+wid>= ItemX && playx<=ItemX+appear.width && playy <= ItemY+appear.height && playy+heig >= ItemY) {
-        point = point + points;
-        player.health = player.health + eff;
-        isdead = true;
-        soundplayer = MUS.loadFile(name+".wav", 2048);
-        if (name == "key") {
-          //  nextlevel = true;
-        }
+    if (playx+wid>= ItemX && playx<=ItemX+appear.width && playy <= ItemY+appear.height && playy+heig >= ItemY) {
+      point = point + points;
+      player.health = player.health + eff;
+      isdead = true;
+      soundplayer = MUS.loadFile(name+".wav", 2048);
+      soundplayer.play();
+      if (name == "key") {
+        //  nextlevel = true;
       }
     }
   }
-
 }
