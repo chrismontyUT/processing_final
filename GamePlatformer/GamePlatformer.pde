@@ -106,7 +106,8 @@ void draw() {
       //  player.duck();
       //}
     }
-  } else {
+  } 
+  else if (!(keyPressed) && player.falling == false) {
     player.fallVelocity =0;
     player.stand();
   }
