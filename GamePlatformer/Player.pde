@@ -100,17 +100,6 @@ class Player {
   }
   void jump() {
     fallVelocity = -10;
-
-    /*if (map1.top_left_of_player() == true) { 
-     velocity.y = 0;
-     }
-     if (map1.top_right_of_player() == true) {
-     velocity.y = 0;
-     }
-     if (map1.bottom_left_of_player() == true ^ map1.bottom_right_of_player() == true)
-     {
-     velocity.x = 0;
-     }*/
     fall();
   }
   void duck() { 
@@ -146,22 +135,6 @@ class Player {
       }
     }
 
-  /*  if (map1.top_left_of_player() == true || map1.top_right_of_player() == true) { //checks if top corners are in a metal tile
-      if (velocity.y > 0) {
-        velocity.y = -velocity.y;
-      }
-    }
-    
-    if (map1.bottom_left_of_player() == true || map1.bottom_right_of_player() == true) {
-     velocity.y = 0;
-     }
-     
-     if (velocity.x < 0 && map1.bottom_left_of_player() == true) {
-     velocity.x = 0;
-     }
-     if (velocity.x > 0 && map1.bottom_right_of_player() == true) {
-     velocity.x = 0;
-     }*/
     playerX += velocity.x;
     if (playerX<0) {   //prevents player from walking off the screen to the left
       playerX = 0;
@@ -169,7 +142,7 @@ class Player {
     }
 
     if (playerX + images[0].width>2430) {   //prevents player from walking off the screen to the right... 2430 because we scaled it by .5
-      playerX = 2430- images[0].width;
+      playerX = 2415- images[0].width;
       velocity.x = -velocity.x;
     }
     if (velocity.x>0)
@@ -181,11 +154,7 @@ class Player {
       image(fall, -playerX-70, playerY+2);
     }
   }
-  void correct(){
-    if (levels[level-1].bottom_right_of_player() == true){
-      playerY -= (overshoot() + 1);
-    }
-  }
+
   void display()
   {
     image(images[frame], playerX, playerY);
