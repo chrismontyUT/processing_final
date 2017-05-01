@@ -168,7 +168,7 @@ class Player {
   
   public boolean canMove() {
     if(can_fall() == true) {
-      fall();
+      //fall();
       return false;
     }
     else {
