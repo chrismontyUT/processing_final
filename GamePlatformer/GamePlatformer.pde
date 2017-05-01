@@ -43,6 +43,21 @@ void setup() {
     // Add a metal tile where specified in the csv file
     levels[level_num-1].add_tile(x_pos , y_pos, 1); // (subtract 1 to match array index)
   }
+  
+  // Load Tiles csv into each map
+  Table lasers = loadTable("lasers.csv" , "header");
+  for(TableRow row : lasers.rows()) {
+    
+    int level_num = row.getInt("level");
+    int x_pos = row.getInt("x");
+    int y_pos = row.getInt("y");
+    int dir = row.getInt("dir");
+    int range = row.getInt("range");
+    // Add a laser where specified in the csv file
+    levels[level_num-1].add_laser(x_pos , y_pos, dir, range);
+    
+  }
+  
 }
 
 void draw() { 
