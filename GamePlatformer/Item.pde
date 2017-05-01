@@ -90,7 +90,7 @@ class Item {
 
   void show() {
     timer = timer + 1;
-    if (timer == 20) {
+    if (timer == int(30/lenofimg)) {
       counter = counter + 1;
       timer = 0;
     }
