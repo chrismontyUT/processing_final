@@ -1,3 +1,6 @@
+import ddf.minim.*;//
+AudioPlayer soundplayer;
+Minim MUS;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player;
@@ -7,11 +10,17 @@ EnemyGroup enemiesLevel2;
 EnemyGroup enemiesLevel3;
 EnemyGroup enemiesLevel4;
 int level = 1;
+ItemGroup itemlevel[] = new ItemGroup[4];
+
+float point;
 
 void setup() {
+  point = 0;
   frameRate(60);
   surface.setResizable(true);
   size(1215, 675);
+  MUS = new Minim(this);
+  //soundplayer = MUS.loadFile("bgm.mp3", 2048);
   player = new Player(1, 1, "player", 11);
   enemiesLevel1 = new EnemyGroup();
   enemiesLevel2 = new EnemyGroup();
@@ -20,6 +29,11 @@ void setup() {
   for (int i = 0; i<4 ; i++){
     spider_group[i] = new EnemyGroup();
   }
+  for (int j = 0; j<4 ; j++){ //<>//
+    itemlevel[j] = new ItemGroup();
+    println(j);
+  }
+  setitems();
   Table spider_list = loadTable("spiders.csv" , "header");
   for(TableRow row : spider_list.rows()){
     int table_level = row.getInt("level");
@@ -53,8 +67,8 @@ void draw() {
  // Set scaling to 0.5
  scale(0.5);
  // Update enemies for the current level
-  spider_group[level - 1].enemy_run();
- 
+ spider_group[level - 1].enemy_run();
+ itemlevel[level-1].run();
  if(player.canMove()){
  if (keyPressed){
   if (key == CODED && keyCode == RIGHT) {
@@ -79,4 +93,22 @@ void draw() {
   player.stand();
   }
  }
+}
+
+void setitems(){
+  String[] itemtoload = loadStrings("items.csv");;
+  int itemind= 1;
+  String[] current;
+  while(itemind<itemtoload.length){
+    current = split(itemtoload[itemind],',');
+    println(int(current[3]));
+    println(current[0]);
+    println(int(current[0])-1);
+    int lev = int(current[0])-1;
+    itemlevel[lev].addItem(int(current[2]),int(current[3]),current[1]); //<>//
+    //itemgroups[0].addItem(int(current[2]),int(current[3]),current[1]);
+    //itemgroups[int(current[0])].addItem(int(current[2]),int(current[3]),current[1]);
+    itemind = itemind + 1;
+  }
+
 }

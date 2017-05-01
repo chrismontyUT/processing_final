@@ -1,7 +1,5 @@
-float playx = 150;
-float playy = 380;
-float point;
-float life;
+float playx;
+float playy;
 
 
 class ItemGroup {
@@ -10,12 +8,11 @@ class ItemGroup {
 
   ItemGroup() {
     itemgroups = new ArrayList<Item>();
-    point = 0;
-    life = 0;
+    //point = 0;
   }
 
-  void addItem(int x, int y, float effect, float pits, String name) {
-    itemgroups.add(new Item(x, y, effect, pits, name));
+  void addItem(int x, int y, String name) {
+    itemgroups.add(new Item(x, y, name));
   }
   void update() {
     playx = player.playerX;
@@ -23,9 +20,11 @@ class ItemGroup {
   }
 
   void run() {
+    update();
     for (int i = itemgroups.size()-1; i >= 0; i--) {
       Item p = itemgroups.get(i);
       p.show();
+      println("running");
       if (p.isdead == true) {
         itemgroups.remove(i);
       }
@@ -40,72 +39,80 @@ class Item {
   int ItemY;
   int wid;
   int heig;
-  float points;
+  float points;//for total points
   PImage appear;
   int index;
   boolean isdead;
-  float eff;
+  float eff;//for health
   int counter;
-  float timer;
+  float timer=0;
   int len;
   String name;
 
-  Item(int x, int y, float pointss, float effect, String nam)
+  Item(int x, int y, String nam)
   {
     ItemX = x;
     ItemY = y;
-    points = pointss;    
-    eff = effect;
-    wid = width;
-    heig = height;
+    wid = player.images[0].width;
+    heig = player.images[0].height;
     name = nam;
     isdead = false;
     len = 0;
     counter = 1;
-    if(name == "bomb"){len = 2;}
-    if(name == "coin"){len = 3;}
-    if(name == "mushroom"){len = 2;}
-    if(name == "gem"){len = 4;}
-    if(name == "key"){len = 4;}
-    
+    if (name == "bomb") {
+      len = 2;
+      eff = -0.1;
+      points = -1;
+    }     
+
+    if (name == "coin") {
+      len = 3;
+      eff = 0;
+      points = 1;
+    }
+    if (name == "mushroom") {
+      len = 2;
+      eff = 0.01;
+      points = 0;
+    }
+    if (name == "gem") {
+      len = 4;
+      eff = 0.1;
+      points = 1;
+    }
+    if (name == "key") {
+      len = 4;
+    }
   }
   void show() {
+    iscatch();
     timer = timer + 1;
-    if (timer == 10) {
+    if (timer == 5) {
       counter = counter + 1;
       timer = 0;
     }
     if (counter > len) {
       counter = 1;
     }
+    println(counter);
     appear = loadImage(name+str(counter)+".png");
     image(appear, ItemX, ItemY);
   }
 
   void iscatch() {
     if (points>0) {
-      if (mousePressed == true) {
-        if (playx <= ItemX+wid && playx>=ItemX && playy<= ItemY && playy>= ItemY-heig) {
-          point = point + points;
-          isdead = true;
-          life = life + eff;
-          if(name == "key"){
-          //  nextlevel = true;
-          }
-        }
-      }
-    } else {
-      if (playx <= ItemX+wid && playx>=ItemX && playy <= ItemY && playy >= ItemY-heig) {
+      //playx+wid>= ItemX && playx<=ItemX+appear.width
+      //playy <= ItemY+appear.height && playy+height >= ItemY
+      if (playx+wid>= ItemX && playx<=ItemX+appear.width && playy <= ItemY+appear.height && playy+heig >= ItemY) {
         point = point + points;
+        player.health = player.health + eff;
         isdead = true;
-        life = life + eff;
+        soundplayer = MUS.loadFile(name+".wav", 2048);
+        if (name == "key") {
+          //  nextlevel = true;
+        }
       }
     }
   }
 
-  void display() {
-    if (isdead == true) {
-      image(appear, ItemX, ItemY);
-    }
-  }
 }

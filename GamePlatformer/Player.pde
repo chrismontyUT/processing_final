@@ -2,7 +2,7 @@ class Player {
 
   int playerX;
   int playerY;
-  int health = 10;
+  float health = 10;
   PImage[] images;
   int imageCount;
   int frame;
