@@ -1,19 +1,19 @@
 class EnemyGroup{
   
-  ArrayList<Spider> spider_group;
+  ArrayList<Spider> spiders;
 
   EnemyGroup (){
           
-      spider_group = new ArrayList<Spider>();
+      spiders = new ArrayList<Spider>();
 
    }
    
    void addspider(float x_pos , float y_pos , int level , float range){
-      spider_group.add(new Spider(x_pos , y_pos , level , range));
+      spiders.add(new Spider(x_pos , y_pos , level , range));
  }
    void enemy_run(){
-     for(int i = 0; i< spider_group.size(); i++){
-       Spider s = spider_group.get(i);
+     for(int i = 0; i< spiders.size(); i++){
+       Spider s = spiders.get(i);
        s.walk();
      }
    }

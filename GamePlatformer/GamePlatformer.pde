@@ -6,10 +6,7 @@ Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player;
 Spider spider;
-EnemyGroup enemiesLevel1;
-EnemyGroup enemiesLevel2;
-EnemyGroup enemiesLevel3;
-EnemyGroup enemiesLevel4;
+
 int level = 1;
 ItemGroup itemlevel[] = new ItemGroup[4];
 
@@ -25,10 +22,7 @@ void setup() {
   backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
   
-  enemiesLevel1 = new EnemyGroup();
-  enemiesLevel2 = new EnemyGroup();
-  enemiesLevel3 = new EnemyGroup();
-  enemiesLevel4 = new EnemyGroup();
+
   for (int i = 0; i<4 ; i++){
     spider_group[i] = new EnemyGroup();
   }

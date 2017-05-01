@@ -2,6 +2,8 @@ class Player {
 
   int playerX;
   int playerY;
+  int orig_x;
+  int orig_y;
   float health = 10;
   PImage[] images;
   int imageCount;
@@ -204,6 +206,26 @@ class Player {
       return true;
     }
   }
+  public boolean touched_spider(){
+    for (int i = 0; i < spider_group[level - 1].spiders.size() ;i++){
+      if((playerX + 30) > (spider_group[level - 1].spiders.get(i).x + 480) && ((playerX + 30) < (spider_group[level - 1].spiders.get(i).x + 590))){
+        if(playerY + 45 > (spider_group[level - 1].spiders.get(i).y - 30) && (playerY + 45< (spider_group[level - 1].spiders.get(i).y + 70))){
+          playerX = orig_x;
+          playerY = orig_y;
+          velocity.x = 0;
+          velocity.y = 0;
+          return true;
+         }
+         else continue;
+      }
+      else continue;
+    }
+     return false;
   
+  
+  
+  
+  
+  }
 
 }
