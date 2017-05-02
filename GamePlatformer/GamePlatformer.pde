@@ -4,7 +4,7 @@ AudioPlayer backgroundplayer;
 Minim MUS;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
-Player player;
+Player player; //<>//
 Spider spider;
 
 int level = 1;
@@ -53,6 +53,32 @@ void setup() {
     int y_pos = row.getInt("y");
     // Add a metal tile where specified in the csv file
     levels[level_num-1].add_tile(x_pos, y_pos, 1); // (subtract 1 to match array index)
+  }
+  
+  // Load Lasers csv into each map
+  Table lasers = loadTable("lasers.csv" , "header");
+  for(TableRow row : lasers.rows()) {
+    
+    int level_num = row.getInt("level");
+    int x_pos = row.getInt("x");
+    int y_pos = row.getInt("y");
+    int dir = row.getInt("dir");
+    int range = row.getInt("range");
+    // Add a laser where specified in the csv file
+    levels[level_num-1].add_laser(x_pos , y_pos, dir, range);
+    
+  }
+  
+  // Load Switches csv into each map
+  Table switches = loadTable("switches.csv" , "header");
+  for(TableRow row : switches.rows()) {
+    
+    int level_num = row.getInt("level");
+    int x_pos = row.getInt("x");
+    int y_pos = row.getInt("y");
+    // Add a laser where specified in the csv file
+    levels[level_num-1].add_switch(x_pos , y_pos);
+    
   }
 }
 
@@ -115,6 +141,10 @@ void draw() {
   //  player.fallVelocity =0;
   //  player.stand();
   //}
+ if(levels[level-1].check_laser_collisions(player.get_corners())) {
+   player.playerX = 1;
+   player.playerY = 1;
+ }
 }
 
 void setitems() {
@@ -128,5 +158,12 @@ void setitems() {
     int lev = int(current[0])-1;
     itemlevel[lev].addItem(int(current[2]), int(current[3]), int(current[4])); //<>//
     itemind = itemind + 1;
+  }
+}
+
+
+void keyTyped() {
+  if(key == ' ') {
+    levels[level-1].space_pressed(player.get_corners());
   }
 }
