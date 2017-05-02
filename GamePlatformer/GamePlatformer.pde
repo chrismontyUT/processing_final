@@ -2,6 +2,8 @@ import ddf.minim.*;//
 AudioPlayer soundplayer;
 AudioPlayer backgroundplayer;
 Minim MUS;
+Overlay overlay;
+boolean muted;
 boolean is_game_over;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
@@ -24,6 +26,8 @@ void setup() {
   surface.setResizable(true);
   size(1215, 675);
   MUS = new Minim(this);
+  overlay = new Overlay();
+  muted = false;
   backgroundplayer = MUS.loadFile("background.wav", 2048);
   backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
@@ -96,10 +100,14 @@ void setup() {
 
 void draw() { 
   if(!is_game_over) {
+    
+    
+    
   // Set backgroud color to black
   background(0);
   // Display the map for the current level
   levels[level-1].display();
+  overlay.display_sound_icon(muted); 
   // Set scaling to 0.5
   scale(0.5);
   // Update enemies for the current level
@@ -164,9 +172,10 @@ void draw() {
    player.playerX = 1;
    player.playerY = 1;
    player.velocity.x = 0;
-   player.velocity.y = 0;
+   player.velocity.y = 0; //<>//
    is_game_over = true;
  }
+ 
  } else {
    display_game_over_screen();
  }
@@ -199,6 +208,19 @@ void keyPressed() {
   }
   if (key == CODED && keyCode == DOWN) {
     keys[3] = true;
+  }
+}
+
+void mouseClicked() {
+  // Check if mute button is pressed
+  if(mouseX <= 30 && mouseY <= 30) {
+    if(muted) {
+      muted = false;
+      backgroundplayer.unmute();
+    } else {
+      muted = true;
+      backgroundplayer.mute();
+    }
   }
 }
 
