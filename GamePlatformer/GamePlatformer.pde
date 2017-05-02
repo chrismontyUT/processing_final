@@ -100,14 +100,11 @@ void setup() {
 
 void draw() { 
   if(!is_game_over) {
-    
-    
-    
   // Set backgroud color to black
   background(0);
   // Display the map for the current level
   levels[level-1].display();
-  overlay.display_sound_icon(muted); 
+  overlay.display_sound_icon();
   // Set scaling to 0.5
   scale(0.5);
   // Update enemies for the current level
@@ -150,17 +147,9 @@ void draw() {
       }
       if (key == CODED && keyCode == UP) {
         player.jump();
-      } //<>//
-      //if (key == CODED && keyCode == DOWN) {
-      //  player.fallVelocity =0; //<>//
-      //  player.duck();
-      //}
+      } //<>// //<>//
     }
   } 
-  //else if (!(keyPressed) && player.falling == false) {
-  //  player.fallVelocity =0;
-  //  player.stand();
-  //}
  if(player.touched_spider()){
    player.playerX = 1;
    player.playerY = 1;
@@ -172,29 +161,15 @@ void draw() {
    player.playerX = 1;
    player.playerY = 1;
    player.velocity.x = 0;
-   player.velocity.y = 0; //<>//
+   player.velocity.y = 0;
    is_game_over = true;
  }
- 
  } else {
    display_game_over_screen();
+   //setup();
  }
 }
-/*
-void setitems() {
-  String[] itemtoload = loadStrings("items.csv"); 
-  int itemind= 0; //<>//
-  String[] current;
-  current = split(itemtoload[itemind], ',');
-  itemind = itemind + 1;
-  while (itemind<itemtoload.length) {
-    current = split(itemtoload[itemind], ',');
-    int lev = int(current[0])-1;
-    itemlevel[lev].addItem(int(current[2]), int(current[3]), int(current[4])); //<>//
-    itemind = itemind + 1;
-  }
-}
-*/
+ //<>// //<>//
 
 void keyPressed() {
   if (key == CODED && keyCode == RIGHT) {
@@ -208,19 +183,6 @@ void keyPressed() {
   }
   if (key == CODED && keyCode == DOWN) {
     keys[3] = true;
-  }
-}
-
-void mouseClicked() {
-  // Check if mute button is pressed
-  if(mouseX <= 30 && mouseY <= 30) {
-    if(muted) {
-      muted = false;
-      backgroundplayer.unmute();
-    } else {
-      muted = true;
-      backgroundplayer.mute();
-    }
   }
 }
 
@@ -239,9 +201,23 @@ void keyReleased() {
   }
 }
 
+void mouseClicked() {
+  // Check if mute button is pressed
+  if(mouseX <= 30 && mouseY <= 30) {
+    if(muted) {
+      muted = false;
+      backgroundplayer.unmute();
+    } else {
+      muted = true;
+      backgroundplayer.mute();
+    }
+  }
+}
+
 void keyTyped() {
   if(key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
     is_game_over = false;
+    setup();
   }
 }
