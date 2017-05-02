@@ -2,6 +2,7 @@ import ddf.minim.*;//
 AudioPlayer soundplayer;
 AudioPlayer backgroundplayer;
 Minim MUS;
+boolean is_game_over;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player; //<>//
@@ -16,6 +17,8 @@ ItemGroup itemlevel[] = new ItemGroup[4];
 float point;
 
 void setup() {
+  init_game_over();
+  is_game_over = false;
   point = 0;
   frameRate(60);
   surface.setResizable(true);
@@ -92,6 +95,7 @@ void setup() {
 }
 
 void draw() { 
+  if(!is_game_over) {
   // Set backgroud color to black
   background(0);
   // Display the map for the current level
@@ -138,7 +142,7 @@ void draw() {
       }
       if (key == CODED && keyCode == UP) {
         player.jump();
-      }
+      } //<>//
       //if (key == CODED && keyCode == DOWN) {
       //  player.fallVelocity =0; //<>//
       //  player.duck();
@@ -154,18 +158,23 @@ void draw() {
    player.playerY = 1;
    player.velocity.x = 0;
    player.velocity.y = 0;
+   is_game_over = true;
  }
  if(levels[level-1].check_laser_collisions(player.get_corners())) {
    player.playerX = 1;
    player.playerY = 1;
    player.velocity.x = 0;
    player.velocity.y = 0;
+   is_game_over = true;
+ }
+ } else {
+   display_game_over_screen();
  }
 }
 /*
 void setitems() {
   String[] itemtoload = loadStrings("items.csv"); 
-  int itemind= 0;
+  int itemind= 0; //<>//
   String[] current;
   current = split(itemtoload[itemind], ',');
   itemind = itemind + 1;
@@ -211,5 +220,6 @@ void keyReleased() {
 void keyTyped() {
   if(key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
+    is_game_over = false;
   }
 }
