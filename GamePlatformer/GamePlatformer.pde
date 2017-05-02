@@ -144,9 +144,17 @@ void draw() {
   //  player.fallVelocity =0;
   //  player.stand();
   //}
+ if(player.touched_spider()){
+   player.playerX = 1;
+   player.playerY = 1;
+   player.velocity.x = 0;
+   player.velocity.y = 0;
+ }
  if(levels[level-1].check_laser_collisions(player.get_corners())) {
    player.playerX = 1;
    player.playerY = 1;
+   player.velocity.x = 0;
+   player.velocity.y = 0;
  }
 }
 

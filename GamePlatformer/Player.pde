@@ -79,6 +79,10 @@ class Player {
     if (levels[level-1].top_right_of_player() == true) {
       velocity.x = 0;
     }
+    if (playerX + images[0].width>2415) {   //prevents player from walking off the screen to the right... 2430 because we scaled it by .5
+      playerX = 2415- images[0].width;
+      velocity.x = -velocity.x;
+    }
     playerX += velocity.x;
   }
 
@@ -183,10 +187,6 @@ class Player {
     for (int i = 0; i < spider_group[level - 1].spiders.size(); i++) {
       if ((playerX + 30) > (spider_group[level - 1].spiders.get(i).x + 480) && ((playerX + 30) < (spider_group[level - 1].spiders.get(i).x + 590))) {
         if (playerY + 45 > (spider_group[level - 1].spiders.get(i).y - 30) && (playerY + 45< (spider_group[level - 1].spiders.get(i).y + 70))) {
-          playerX = orig_x;
-          playerY = orig_y;
-          velocity.x = 0;
-          velocity.y = 0;
           return true;
         } else continue;
       } else continue;
