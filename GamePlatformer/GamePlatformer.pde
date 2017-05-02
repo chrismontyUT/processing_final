@@ -7,6 +7,9 @@ EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player; //<>//
 Spider spider;
 
+// Keeps track of which keys are pressed because Processing can't do that nativley
+boolean keys[] = new boolean[4];
+
 int level = 1;
 ItemGroup itemlevel[] = new ItemGroup[4];
 
@@ -94,19 +97,19 @@ void draw() {
   itemlevel[level-1].run();
   if (player.canMove()) {
     if (keyPressed) {
-      if (key == CODED && keyCode == RIGHT) {
-        player.fallVelocity =0;
+      if (keys[0]) {
+        //player.fallVelocity =0;
         player.walk();
       }
-      if (key == CODED && keyCode == LEFT) {
-        player.fallVelocity =0;
+      if(keys[1]) {
+        //player.fallVelocity =0;
         player.walkBackwards();
       }
-      if (key == CODED && keyCode == UP) {
+      if(keys[2]) {
         player.fallVelocity =0;
         player.jump();
       }
-      if (key == CODED && keyCode == DOWN) {
+      if(keys[3]) {
         player.fallVelocity =0;
         player.duck();
       }
@@ -161,6 +164,35 @@ void setitems() {
   }
 }
 
+void keyPressed() {
+  if (key == CODED && keyCode == RIGHT) {
+    keys[0] = true;
+  }
+  if (key == CODED && keyCode == LEFT) {
+    keys[1] = true;
+  }
+  if (key == CODED && keyCode == UP) {
+    keys[2] = true;
+  }
+  if (key == CODED && keyCode == DOWN) {
+    keys[3] = true;
+  }
+}
+
+void keyReleased() {
+  if (key == CODED && keyCode == RIGHT) {
+    keys[0] = false;
+  }
+  if (key == CODED && keyCode == LEFT) {
+    keys[1] = false;
+  }
+  if (key == CODED && keyCode == UP) {
+    keys[2] = false;
+  }
+  if (key == CODED && keyCode == DOWN) {
+    keys[3] = false;
+  }
+}
 
 void keyTyped() {
   if(key == ' ') {
