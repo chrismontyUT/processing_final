@@ -55,10 +55,12 @@ class Laser {
     //println("displaying");
     image(gun, x*45, y*45);
     // Shooting right
-    if(dir == 0) {
-       for(int i = 0; i < range; i++) {
-         image(beam, 45 + x*45 + i * 45, y*45); 
-       }
+    if(on) {
+      if(dir == 0) {
+         for(int i = 0; i < range; i++) {
+           image(beam, 45 + x*45 + i * 45, y*45); 
+         }
+      }
     }
     
   }

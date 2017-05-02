@@ -33,6 +33,7 @@ void setup() {
   for(int i = 0; i < 4; i++) {
     levels[i] = new Map(27, 20);
   }
+  
   // Load Tiles csv into each map
   Table tiles = loadTable("tiles.csv" , "header");
   for(TableRow row : tiles.rows()) {
@@ -44,7 +45,7 @@ void setup() {
     levels[level_num-1].add_tile(x_pos , y_pos, 1); // (subtract 1 to match array index)
   }
   
-  // Load Tiles csv into each map
+  // Load Lasers csv into each map
   Table lasers = loadTable("lasers.csv" , "header");
   for(TableRow row : lasers.rows()) {
     
@@ -55,6 +56,18 @@ void setup() {
     int range = row.getInt("range");
     // Add a laser where specified in the csv file
     levels[level_num-1].add_laser(x_pos , y_pos, dir, range);
+    
+  }
+  
+  // Load Switches csv into each map
+  Table switches = loadTable("switches.csv" , "header");
+  for(TableRow row : switches.rows()) {
+    
+    int level_num = row.getInt("level");
+    int x_pos = row.getInt("x");
+    int y_pos = row.getInt("y");
+    // Add a laser where specified in the csv file
+    levels[level_num-1].add_switch(x_pos , y_pos);
     
   }
   
@@ -89,6 +102,7 @@ void draw() {
     player.duck();
   }
  }
+ 
  else {
   player.fallVelocity =0;
   player.stand();
@@ -99,4 +113,10 @@ void draw() {
    player.playerX = 1;
    player.playerY = 1;
  }
+}
+
+void keyTyped() {
+  if(key == ' ') {
+    levels[level-1].space_pressed(player.get_corners());
+  }
 }
