@@ -96,6 +96,7 @@ void draw() {
  }
  
  if(levels[level-1].check_laser_collisions(player.get_corners())) {
-   println("You ded!");
+   player.playerX = 1;
+   player.playerY = 1;
  }
 }

@@ -81,10 +81,10 @@ class Map {
       for(int j = 0; j < num_lasers; j++) {
         if(lasers[j].dir == 0 || lasers[j].dir == 1) {
           // Check y
-          if(corners[i].y > lasers[j].y*45 + 15 && corners[i].y < lasers[j].y*45 + 30) {
-             if(corners[i].x > lasers[j].x*45+45 && corners[i].x < lasers[j].x*45 + lasers[j].range * 45) {
-               return true;
-             }
+          if(corners[i].x > lasers[j].get_x() + 45 && corners[i].x < lasers[j].get_end()) {
+            if(corners[i].y > lasers[j].get_y() && corners[i].y < lasers[j].get_y() + 45) {
+              return true;
+            }
           }
         }
       }

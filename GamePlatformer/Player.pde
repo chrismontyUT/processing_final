@@ -210,9 +210,9 @@ class Player {
     
      PVector[] corners = new PVector[4];
      corners[0] = new PVector(playerX, playerY);
-     corners[1] = new PVector(playerX+72, playerY);
-     corners[2] = new PVector(playerX, playerY+97);
-     corners[3] = new PVector(playerX+72, playerY+97);
+     corners[1] = new PVector(playerX+36, playerY);
+     corners[2] = new PVector(playerX, playerY+48);
+     corners[3] = new PVector(playerX+36, playerY+48);
      
      return corners;
      

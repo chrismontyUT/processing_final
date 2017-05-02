@@ -36,6 +36,21 @@ class Laser {
     on = !on; 
   }
   
+  // Used for collision checking
+  int get_x() {
+    return x * 45 * 2;
+  }
+  
+  // Used for collision checking. Includes range of laser beam.
+  int get_y() {
+    return y * 45 * 2;
+  }
+  
+  // Used for collision checking
+  int get_end() {
+    return (y + 45 + range * 45) * 2;
+  }
+  
   void display() {
     //println("displaying");
     image(gun, x*45, y*45);
