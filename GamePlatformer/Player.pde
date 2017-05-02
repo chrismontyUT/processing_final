@@ -21,6 +21,9 @@ class Player {
   boolean bottom_left; // true if bottom left corner of player is occupied by a metal tile
   boolean bottom_right; //true if bottom right corner of player is occupied by a metal tile
   boolean isfalling;
+
+  int numJumps = 0;
+
   Player(int startX, int startY, String imagePrefix, int count)
   {
     playerX = startX;
@@ -106,8 +109,12 @@ class Player {
     }
   }
   void jump() {
-    fallVelocity = -10;
-    fall();
+    if (numJumps<=1)
+    {
+      numJumps++;
+      fallVelocity = -10;
+      fall();
+    }
   }
   void duck() { 
     fallVelocity += 1;
@@ -193,17 +200,16 @@ class Player {
     }
     return false;
   }
-  
+
   // Used for collision with lasers
   PVector[] get_corners() {
-    
-     PVector[] corners = new PVector[4];
-     corners[0] = new PVector(playerX, playerY);
-     corners[1] = new PVector(playerX+36, playerY);
-     corners[2] = new PVector(playerX, playerY+48);
-     corners[3] = new PVector(playerX+36, playerY+48);
-     
-     return corners;
-     
+
+    PVector[] corners = new PVector[4];
+    corners[0] = new PVector(playerX, playerY);
+    corners[1] = new PVector(playerX+36, playerY);
+    corners[2] = new PVector(playerX, playerY+48);
+    corners[3] = new PVector(playerX+36, playerY+48);
+
+    return corners;
   }
 }

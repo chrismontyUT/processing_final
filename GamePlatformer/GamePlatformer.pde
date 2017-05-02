@@ -33,7 +33,7 @@ void setup() {
     itemlevel[j] = new ItemGroup();
     //print(j);
   }
-  setitems();
+ // setitems();
   Table spider_list = loadTable("spiders.csv", "header");
   for (TableRow row : spider_list.rows()) {
     int table_level = row.getInt("level");
@@ -71,6 +71,12 @@ void setup() {
     levels[level_num-1].add_laser(x_pos , y_pos, dir, range);
     
   }
+  Table items = loadTable("items.csv" , "header");
+  for(TableRow row : items.rows()){
+    int x = row.getInt("x.pos");
+    int y = row.getInt("y.pos");
+    int id = row.getInt("index");
+    itemlevel[level - 1].addItem(x,y,id);}
   
   // Load Switches csv into each map
   Table switches = loadTable("switches.csv" , "header");
@@ -96,6 +102,7 @@ void draw() {
   spider_group[level - 1].enemy_run();
   itemlevel[level-1].run();
   if (player.canMove()) {
+    player.numJumps = 0;
     if (keyPressed) {
       if (keys[0]) {
         //player.fallVelocity =0;
@@ -129,10 +136,9 @@ void draw() {
         //player.fallVelocity =0;
         player.walkBackwards();
       }
-      //if (key == CODED && keyCode == UP) {
-      //  player.fallVelocity =0;
-      //  player.jump();
-      //}
+      if (key == CODED && keyCode == UP) {
+        player.jump();
+      }
       //if (key == CODED && keyCode == DOWN) {
       //  player.fallVelocity =0; //<>//
       //  player.duck();
@@ -156,7 +162,7 @@ void draw() {
    player.velocity.y = 0;
  }
 }
-
+/*
 void setitems() {
   String[] itemtoload = loadStrings("items.csv"); 
   int itemind= 0;
@@ -170,6 +176,7 @@ void setitems() {
     itemind = itemind + 1;
   }
 }
+*/
 
 void keyPressed() {
   if (key == CODED && keyCode == RIGHT) {
