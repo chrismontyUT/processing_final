@@ -90,6 +90,8 @@ class Map {
   // Called from the main function when space is pressed.
   // Checks for collision with switches and toggles them when necessary
   public void space_pressed(PVector corners[]) {
+    println(corners[0]);
+    println(switches[0].get_x());
     for(int i = 0; i < 4; i++) {
       for(int j = 0; j < num_switches; j++) {
         // Check y
