@@ -117,17 +117,16 @@ void draw() {
     else if (player.falling == false) {
       player.fallVelocity =0;
       player.stand();
-  }
-  }
-  else if (player.canMove() == false) {
+    }
+  } else {
     player.fall();
     if (keyPressed) {
       if (key == CODED && keyCode == RIGHT) {
-        player.fallVelocity =0;
+        //player.fallVelocity =0;
         player.walk();
       }
       if (key == CODED && keyCode == LEFT) {
-        player.fallVelocity =0;
+        //player.fallVelocity =0;
         player.walkBackwards();
       }
       //if (key == CODED && keyCode == UP) {
