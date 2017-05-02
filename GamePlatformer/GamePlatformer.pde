@@ -99,6 +99,7 @@ void draw() {
   spider_group[level - 1].enemy_run();
   itemlevel[level-1].run();
   if (player.canMove()) {
+    player.numJumps = 0;
     if (keyPressed) {
       if (key == CODED && keyCode == RIGHT) {
         //player.fallVelocity =0;
@@ -133,10 +134,9 @@ void draw() {
         //player.fallVelocity =0;
         player.walkBackwards();
       }
-      //if (key == CODED && keyCode == UP) {
-      //  player.fallVelocity =0;
-      //  player.jump();
-      //}
+      if (key == CODED && keyCode == UP) {
+        player.jump();
+      }
       //if (key == CODED && keyCode == DOWN) {
       //  player.fallVelocity =0; //<>//
       //  player.duck();
