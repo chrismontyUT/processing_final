@@ -142,17 +142,9 @@ void draw() {
       }
       if (key == CODED && keyCode == UP) {
         player.jump();
-      } //<>//
-      //if (key == CODED && keyCode == DOWN) {
-      //  player.fallVelocity =0; //<>//
-      //  player.duck();
-      //}
+      } //<>// //<>//
     }
   } 
-  //else if (!(keyPressed) && player.falling == false) {
-  //  player.fallVelocity =0;
-  //  player.stand();
-  //}
  if(player.touched_spider()){
    player.playerX = 1;
    player.playerY = 1;
@@ -169,23 +161,10 @@ void draw() {
  }
  } else {
    display_game_over_screen();
+   //setup();
  }
 }
-/*
-void setitems() {
-  String[] itemtoload = loadStrings("items.csv"); 
-  int itemind= 0; //<>//
-  String[] current;
-  current = split(itemtoload[itemind], ',');
-  itemind = itemind + 1;
-  while (itemind<itemtoload.length) {
-    current = split(itemtoload[itemind], ',');
-    int lev = int(current[0])-1;
-    itemlevel[lev].addItem(int(current[2]), int(current[3]), int(current[4])); //<>//
-    itemind = itemind + 1;
-  }
-}
-*/
+ //<>// //<>//
 
 void keyPressed() {
   if (key == CODED && keyCode == RIGHT) {
@@ -221,5 +200,6 @@ void keyTyped() {
   if(key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
     is_game_over = false;
+    setup();
   }
 }
