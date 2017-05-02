@@ -9,8 +9,8 @@ class Player {
   int imageCount;
   int frame;
   PImage fall, stand, jump, duck; 
-  float fallVelocity = 2;
-  float fallGravity = .4;
+  float fallVelocity = 5;
+  float fallGravity = 0.4;
   int slow = 3;
   int xpos;//this is the top left corner of the sprite
   int ypos;//this is the top left corner
