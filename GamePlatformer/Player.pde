@@ -133,6 +133,9 @@ class Player {
   }
   void fall() {
     playerY += fallVelocity;
+    if(player.playerY < 0) {
+      player.playerY = 0; 
+    }
     fallVelocity += fallGravity;
     if (fallVelocity>3) {
       fallVelocity = 3;

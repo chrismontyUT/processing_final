@@ -104,7 +104,6 @@ void setup() {
 }
 
 void draw() {
-  println(player.numJumps);
   if(!is_game_over) {
   // Set backgroud color to black
   background(0);
