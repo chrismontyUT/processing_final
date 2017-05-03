@@ -1,5 +1,9 @@
 import ddf.minim.*;//
-AudioPlayer soundplayer;
+AudioPlayer sound_gem;
+AudioPlayer sound_bomb;
+AudioPlayer sound_coin;
+AudioPlayer sound_mushroom;
+AudioPlayer sound_key;
 AudioPlayer backgroundplayer;
 Minim MUS;
 Overlay overlay;
@@ -29,6 +33,7 @@ void setup() {
   overlay = new Overlay();
   muted = false;
   backgroundplayer = MUS.loadFile("background.wav", 2048);
+  load_sounds();
   backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
 
@@ -133,7 +138,9 @@ void draw() {
     }
     if (player.falling == false) {
       player.fallVelocity =0;
-      player.stand();
+      if(!is_walking) {
+        player.stand();
+      }
     }
   } else {
     player.fall();

@@ -1,6 +1,15 @@
 float playx; //<>// //<>// //<>// //<>//
 float playy;
 
+void load_sounds() {
+  
+  sound_gem = MUS.loadFile("gem.wav", 2048);
+  sound_bomb = MUS.loadFile("bomb.wav", 2048);
+  sound_coin = MUS.loadFile("coin.wav", 2048);
+  sound_mushroom = MUS.loadFile("mushroom.wav", 2048);
+  sound_key = MUS.loadFile("key.wav", 2048);
+  
+}
 
 class ItemGroup {
   ArrayList<Item> itemgroups;
@@ -107,11 +116,29 @@ class Item {
       point = point + points;
       player.health = player.health + eff;
       isdead = true;
-      soundplayer = MUS.loadFile(name+".wav", 2048);
-      soundplayer.play();
+      this.play_sound();
       if (name == "key") {
         //  nextlevel = true;
       }
+    }
+  }
+  
+  void play_sound() { 
+    if(name == "gem") { 
+      sound_gem.rewind();
+      sound_gem.play();
+    } else if (name == "bomb") {
+      sound_bomb.rewind();
+      sound_bomb.play();
+    } else if (name == "coin") {
+      sound_coin.rewind();
+      sound_coin.play();
+    } else if (name == "mushroom") {
+      sound_mushroom.rewind();
+      sound_mushroom.play();
+    } else if (name == "key") {
+      sound_key.rewind();
+      sound_key.play();
     }
   }
 }
