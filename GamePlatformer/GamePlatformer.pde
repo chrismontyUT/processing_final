@@ -112,14 +112,17 @@ void draw() {
   spider_group[level - 1].enemy_run();
   itemlevel[level-1].run();
   if (player.canMove()) {
+    boolean is_walking = false;
     player.numJumps = 0;
     if (keys[0]) {
       //player.fallVelocity =0;
       player.walk();
+      is_walking = true;
     }
     if(keys[1]) {
       //player.fallVelocity =0;
       player.walkBackwards();
+      is_walking = true;
     }
     if(keys[2]) {
       
