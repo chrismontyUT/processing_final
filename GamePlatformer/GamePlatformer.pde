@@ -218,6 +218,5 @@ void keyTyped() {
   if(key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
     is_game_over = false;
-    setup();
   }
 }
