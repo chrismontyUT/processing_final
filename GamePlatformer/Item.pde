@@ -1,4 +1,4 @@
-float playx; //<>// //<>// //<>// //<>//
+float playx; //<>// //<>// //<>// //<>// //<>//
 float playy;
 
 void load_sounds() {
@@ -8,7 +8,6 @@ void load_sounds() {
   sounds[2] = MUS.loadFile("coin.wav", 2048);
   sounds[3] = MUS.loadFile("mushroom.wav", 2048);
   sounds[4] = MUS.loadFile("key.wav", 2048);
-  
 }
 
 class ItemGroup {
@@ -59,14 +58,14 @@ class Item {
   float timer;
   int lenofimg;
   String name;
-  Item(int x, int y, int nameindex){
+  Item(int x, int y, int nameindex) {
     ItemX = x;
     ItemY = y;
     wid = player.images[0].width;
     heig = player.images[0].height;
     isdead = false;
     counter = 1;
-    if (nameindex == 2) { //<>//
+    if (nameindex == 2) {
       lenofimg = 2;
       name = "bomb";
       eff = -0.1;
@@ -94,8 +93,12 @@ class Item {
       lenofimg = 4;
       name = "key";
     }
-    counter = int(random(1,lenofimg+1));
-}
+    if (nameindex == 5) {
+      lenofimg = 1;
+      name = "door";
+    }
+    counter = int(random(1, lenofimg+1));
+  }
 
   void show() {
     timer = timer + 1;
@@ -106,9 +109,23 @@ class Item {
     if (counter > lenofimg) {
       counter = 1;
     }
-    appear = loadImage(name+str(counter)+".png");
+    if (lenofimg ==1 && gotkey == false) {
+      appear = loadImage("door0.png");
+      image(appear, ItemX, ItemY);
+      appear = loadImage("door1.png");
+      image(appear, ItemX, ItemY+70);
+    }
+    else if (lenofimg ==1 && gotkey == true) {
+      appear = loadImage("door3.png");
+      image(appear, ItemX, ItemY);
+      appear = loadImage("door4.png");
+      image(appear, ItemX, ItemY+70);
+    } 
+    else if (lenofimg !=1)  {
+      appear = loadImage(name+str(counter)+".png");
+      image(appear, ItemX, ItemY);
+    }
     iscatch();
-    image(appear, ItemX, ItemY);
   }
 
   void iscatch() {
@@ -118,13 +135,13 @@ class Item {
       isdead = true;
       this.play_sound();
       if (name == "key") {
-        //  nextlevel = true;
+        gotkey = true;
       }
     }
   }
-  
+
   void play_sound() { 
-    if(name == "gem") { 
+    if (name == "gem") { 
       sounds[0].rewind();
       sounds[0].play();
     } else if (name == "bomb") {

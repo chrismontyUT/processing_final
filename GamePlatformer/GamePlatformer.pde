@@ -9,6 +9,7 @@ Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player; //<>//
 Spider spider;
+boolean gotkey;
 
 // Keeps track of which keys are pressed because Processing can't do that nativley
 boolean keys[] = new boolean[4];
@@ -42,6 +43,7 @@ void setup() {
     //print(j);
   }
  // setitems();
+ gotkey = false;
   Table spider_list = loadTable("spiders.csv", "header");
   for (TableRow row : spider_list.rows()) {
     int table_level = row.getInt("level");

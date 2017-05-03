@@ -69,3 +69,4 @@ level,name,x.pos,y.pos,index
 1,coin,1150,1200,4
 1,coin,1050,1200,4
 1,coin,1550,1100,4
+1,door,2350,40,5
