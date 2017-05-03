@@ -139,8 +139,12 @@ class Item {
         gotkey = true;
         isdead = false;
         ItemX = 2350;
-        ItemY = 6;
-        
+        ItemY = 6; 
+      }
+      if(lenofimg ==1 && gotkey == true){
+        level = level + 1;
+        player.playerX = 0;
+        player.playerY = 0;
       }
     }
   }
