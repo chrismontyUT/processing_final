@@ -6,6 +6,8 @@ class Player {
   int orig_y;
   float health = 10;
   PImage[] images;
+  PImage star;
+  
   int imageCount;
   int frame;
   PImage fall, stand, jump, duck; 
@@ -31,7 +33,9 @@ class Player {
     isfalling = false;
     imageCount = count;
     images = new PImage[imageCount];
-
+    star= loadImage("star.png");
+    star.resize(30, 30);
+    health = 10;
     for (int i = 0; i < imageCount; i++) {
       // Use nf() to number format 'i' into two digits
       String filename = imagePrefix + nf(i, 2) + ".png";
@@ -174,7 +178,8 @@ class Player {
 
   void display()
   {
-    image(images[frame], playerX, playerY);
+    image(images[frame], playerX, playerY); //<>//
+
   }
   boolean can_fall() {      //returns true if the tile beneath the player is black and the player can fall
     if (levels[level-1].tiles[currentX_tile()][currentY_tile() + 1].type == 0) {

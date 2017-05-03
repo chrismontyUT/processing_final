@@ -1,4 +1,4 @@
-import ddf.minim.*;//
+import ddf.minim.*;// //<>// //<>//
 AudioPlayer[] sounds;
 AudioPlayer backgroundplayer;
 Minim MUS;
@@ -7,7 +7,7 @@ boolean muted;
 boolean is_game_over;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
-Player player; //<>//
+Player player;
 Spider spider;
 boolean gotkey;
 
@@ -16,7 +16,7 @@ boolean keys[] = new boolean[4];
 
 int level = 1;
 ItemGroup itemlevel[] = new ItemGroup[4];
-
+GhostGroup ghosts;
 float point;
 
 void setup() {
@@ -33,7 +33,7 @@ void setup() {
   load_sounds();
   backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
-
+  ghosts = new GhostGroup();
 
   for (int i = 0; i<4; i++) {
     spider_group[i] = new EnemyGroup();
@@ -42,8 +42,8 @@ void setup() {
     itemlevel[j] = new ItemGroup();
     //print(j);
   }
- // setitems();
- gotkey = false;
+  // setitems();
+  gotkey = false;
   Table spider_list = loadTable("spiders.csv", "header");
   for (TableRow row : spider_list.rows()) {
     int table_level = row.getInt("level");
@@ -67,109 +67,114 @@ void setup() {
     // Add a metal tile where specified in the csv file
     levels[level_num-1].add_tile(x_pos, y_pos, 1); // (subtract 1 to match array index)
   }
-  
+
   // Load Lasers csv into each map
-  Table lasers = loadTable("lasers.csv" , "header");
-  for(TableRow row : lasers.rows()) {
-    
+  Table lasers = loadTable("lasers.csv", "header");
+  for (TableRow row : lasers.rows()) {
+
     int level_num = row.getInt("level");
     int x_pos = row.getInt("x");
     int y_pos = row.getInt("y");
     int dir = row.getInt("dir");
     int range = row.getInt("range");
     // Add a laser where specified in the csv file
-    levels[level_num-1].add_laser(x_pos , y_pos, dir, range);
-    
+    levels[level_num-1].add_laser(x_pos, y_pos, dir, range);
   }
-  Table items = loadTable("items.csv" , "header");
-  for(TableRow row : items.rows()){
+  Table items = loadTable("items.csv", "header");
+  for (TableRow row : items.rows()) {
     int x = row.getInt("x.pos");
     int y = row.getInt("y.pos");
     int id = row.getInt("index");
-    itemlevel[level - 1].addItem(x,y,id);}
-  
+    itemlevel[level - 1].addItem(x, y, id);
+  }
+
   // Load Switches csv into each map
-  Table switches = loadTable("switches.csv" , "header");
-  for(TableRow row : switches.rows()) {
-    
+  Table switches = loadTable("switches.csv", "header");
+  for (TableRow row : switches.rows()) {
+
     int level_num = row.getInt("level");
     int x_pos = row.getInt("x");
     int y_pos = row.getInt("y");
     // Add a laser where specified in the csv file
-    levels[level_num-1].add_switch(x_pos , y_pos);
-    
+    levels[level_num-1].add_switch(x_pos, y_pos);
   }
 }
 
 void draw() {
-  if(!is_game_over) {
-  // Set backgroud color to black
-  background(0);
-  // Display the map for the current level
-  levels[level-1].display();
-  overlay.display_sound_icon(muted);
-  // Set scaling to 0.5
-  scale(0.5);
-  // Update enemies for the current level
-  spider_group[level - 1].enemy_run();
-  itemlevel[level-1].run();
-  if (player.canMove()) {
-    boolean is_walking = false;
-    player.numJumps = 0;
-    if (keys[0]) {
-      //player.fallVelocity =0;
-      player.walk();
-      is_walking = true;
-    }
-    if(keys[1]) {
-      //player.fallVelocity =0;
-      player.walkBackwards();
-      is_walking = true;
-    }
-    if(keys[2]) {
-      
-    }
-    if(keys[3]) {
-      player.fallVelocity =0;
-      player.duck();
-    }
-    if (player.falling == false) {
-      player.fallVelocity =0;
-      if(!is_walking) {
-        player.stand();
+  if (!is_game_over) {
+    // Set backgroud color to black
+    background(0);
+    // Display the map for the current level
+    levels[level-1].display();
+    overlay.display_sound_icon(muted);
+    // Set scaling to 0.5
+    scale(0.5);
+    // Update enemies for the current level
+    spider_group[level - 1].enemy_run();
+    itemlevel[level-1].run();
+    ghosts.run();
+    if (player.canMove()) {
+      boolean is_walking = false;
+      player.numJumps = 0;
+      if (keys[0]) {
+        //player.fallVelocity =0;
+        player.walk();
+        is_walking = true;
       }
+      if (keys[1]) {
+        //player.fallVelocity =0;
+        player.walkBackwards();
+        is_walking = true;
+      }
+      if (keys[2]) {
+      }
+      if (keys[3]) {
+        player.fallVelocity =0;
+        player.duck();
+      }
+      if (player.falling == false) {
+        player.fallVelocity =0;
+        if (!is_walking) {
+          player.stand();
+        }
+      }
+    } else {
+      player.fall();
+      if (keys[0]) {
+        //player.fallVelocity =0;
+        player.walk();
+      }
+      if (keys[1]) {
+        //player.fallVelocity =0;
+        player.walkBackwards();
+      }
+    } 
+    int i = 0;
+    println(player.health); //<>//
+    while ( i<player.health) {
+      image(player.star, player.playerX-30+i*10, player.playerY-30);
+      i = i+2;
+    }
+    if (player.touched_spider()) {
+      player.playerX = 1;
+      player.playerY = 1;
+      player.velocity.x = 0;
+      player.velocity.y = 0;
+      is_game_over = true;
+    }
+    if (levels[level-1].check_laser_collisions(player.get_corners())) {
+      player.playerX = 1;
+      player.playerY = 1;
+      player.velocity.x = 0;
+      player.velocity.y = 0;
+      is_game_over = true;
     }
   } else {
-    player.fall();
-    if (keys[0]) {
-      //player.fallVelocity =0;
-      player.walk();
-    }
-    if (keys[1]) {
-      //player.fallVelocity =0;
-      player.walkBackwards();
-    }
-  } 
- if(player.touched_spider()){
-   player.playerX = 1;
-   player.playerY = 1;
-   player.velocity.x = 0;
-   player.velocity.y = 0;
-   is_game_over = true;
- }
- if(levels[level-1].check_laser_collisions(player.get_corners())) {
-   player.playerX = 1;
-   player.playerY = 1;
-   player.velocity.x = 0;
-   player.velocity.y = 0;
-   is_game_over = true;
- }
- } else {
-   display_game_over_screen();
-   //setup();
- }
+    display_game_over_screen();
+    //setup();
+  }
 }
- //<>// //<>//
+//<>//
 
 void keyPressed() {
   if (key == CODED && keyCode == RIGHT) {
@@ -206,17 +211,17 @@ void keyReleased() {
 
 void mouseClicked() {
   // Check if mute button is pressed
-  if(mouseX <= 30 && mouseY <= 30) {
-    if(muted) {
+  if (mouseX <= 30 && mouseY <= 30) {
+    if (muted) {
       muted = false;
       backgroundplayer.unmute();
-      for(int i = 0; i < 5; i++){
+      for (int i = 0; i < 5; i++) {
         sounds[i].unmute();
       }
     } else {
       muted = true;
       backgroundplayer.mute();
-      for(int i = 0; i < 5; i++){
+      for (int i = 0; i < 5; i++) {
         sounds[i].mute();
       }
     }
@@ -224,8 +229,9 @@ void mouseClicked() {
 }
 
 void keyTyped() {
-  if(key == ' ') {
+  if (key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
     is_game_over = false;
+    setup();
   }
 }

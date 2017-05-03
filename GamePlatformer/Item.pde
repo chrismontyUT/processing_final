@@ -68,8 +68,8 @@ class Item {
     if (nameindex == 2) {
       lenofimg = 2;
       name = "bomb";
-      eff = -0.1;
-      points = -1;
+      eff = -2;
+      points = -10;
     }     
     if (nameindex == 4) {
       lenofimg = 3;
@@ -80,13 +80,13 @@ class Item {
     if (nameindex == 1) {
       lenofimg = 2;
       name = "mushroom";
-      eff = 0.01;
+      eff = 0.5;
       points = 0;
     }
     if (nameindex == 3) {
       lenofimg = 4;
       name = "gem";
-      eff = 0.1;
+      eff = 1;
       points = 1;
     }
     if (nameindex == 0) {
@@ -132,6 +132,7 @@ class Item {
     if (playx+wid>= ItemX && playx<=ItemX+appear.width && playy <= ItemY+appear.height && playy+heig >= ItemY) {
       point = point + points;
       player.health = player.health + eff;
+      if(player.health >=12){player.health = 12;}
       isdead = true;
       this.play_sound();
       if (name == "key") {
@@ -147,6 +148,7 @@ class Item {
     } else if (name == "bomb") {
       sounds[1].rewind();
       sounds[1].play();
+      ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
     } else if (name == "coin") {
       sounds[2].rewind();
       sounds[2].play();
