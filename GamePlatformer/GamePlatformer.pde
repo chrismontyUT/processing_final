@@ -106,6 +106,16 @@ void draw() {
     background(0);
     // Display the map for the current level
     levels[level-1].display();
+    int i = 0;
+    fill(255,255,0);
+    strokeWeight(4);
+    textSize(26);
+    text("Lifes:",300,35);
+    while ( i<player.health) {
+      image(player.star, 370+i*15, 6);
+      i = i+2;
+    }
+    text("Points:"+int(point),600,35);
     overlay.display_sound_icon(muted);
     // Set scaling to 0.5
     scale(0.5);
@@ -148,13 +158,7 @@ void draw() {
         //player.fallVelocity =0;
         player.walkBackwards();
       }
-    } 
-    int i = 0;
-    println(player.health); //<>//
-    while ( i<player.health) {
-      image(player.star, player.playerX-30+i*10, player.playerY-30);
-      i = i+2;
-    }
+    }  //<>//
     if (player.touched_spider()) {
       player.playerX = 1;
       player.playerY = 1;

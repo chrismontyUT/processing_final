@@ -137,6 +137,10 @@ class Item {
       this.play_sound();
       if (name == "key") {
         gotkey = true;
+        isdead = false;
+        ItemX = 2350;
+        ItemY = 6;
+        
       }
     }
   }

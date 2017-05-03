@@ -47,10 +47,10 @@ class ghost {
     tint(255,0,0, lifespam+55);  // Display at half opacity
     image(thebody, ItemX,ItemY,bodywid,bodyheight);
     noTint();
-    ItemX = ItemX + int(random(-3,3));
-    ItemY = ItemY - 2;
-    bodywid = bodywid - 0.3;
-    bodyheight = bodyheight - 0.35;
+    ItemX = ItemX + int(random(-6,6));
+    ItemY = ItemY - 3;
+    bodywid = bodywid + 0.36;
+    bodyheight = bodyheight + 0.485;
     lifespam = lifespam - 1;
     if(lifespam == 0){
       isdead = true;

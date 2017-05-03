@@ -34,7 +34,7 @@ class Player {
     imageCount = count;
     images = new PImage[imageCount];
     star= loadImage("star.png");
-    star.resize(30, 30);
+    star.resize(40, 40);
     health = 10;
     for (int i = 0; i < imageCount; i++) {
       // Use nf() to number format 'i' into two digits
