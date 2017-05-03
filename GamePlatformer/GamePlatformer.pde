@@ -104,7 +104,7 @@ void draw() {
   background(0);
   // Display the map for the current level
   levels[level-1].display();
-  overlay.display_sound_icon();
+  overlay.display_sound_icon(muted);
   // Set scaling to 0.5
   scale(0.5);
   // Update enemies for the current level
