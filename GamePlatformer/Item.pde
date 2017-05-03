@@ -2,12 +2,12 @@ float playx; //<>// //<>// //<>// //<>//
 float playy;
 
 void load_sounds() {
-  
-  sound_gem = MUS.loadFile("gem.wav", 2048);
-  sound_bomb = MUS.loadFile("bomb.wav", 2048);
-  sound_coin = MUS.loadFile("coin.wav", 2048);
-  sound_mushroom = MUS.loadFile("mushroom.wav", 2048);
-  sound_key = MUS.loadFile("key.wav", 2048);
+  sounds = new AudioPlayer[5];
+  sounds[0] = MUS.loadFile("gem.wav", 2048);
+  sounds[1] = MUS.loadFile("bomb.wav", 2048);
+  sounds[2] = MUS.loadFile("coin.wav", 2048);
+  sounds[3] = MUS.loadFile("mushroom.wav", 2048);
+  sounds[4] = MUS.loadFile("key.wav", 2048);
   
 }
 
@@ -125,20 +125,20 @@ class Item {
   
   void play_sound() { 
     if(name == "gem") { 
-      sound_gem.rewind();
-      sound_gem.play();
+      sounds[0].rewind();
+      sounds[0].play();
     } else if (name == "bomb") {
-      sound_bomb.rewind();
-      sound_bomb.play();
+      sounds[1].rewind();
+      sounds[1].play();
     } else if (name == "coin") {
-      sound_coin.rewind();
-      sound_coin.play();
+      sounds[2].rewind();
+      sounds[2].play();
     } else if (name == "mushroom") {
-      sound_mushroom.rewind();
-      sound_mushroom.play();
+      sounds[3].rewind();
+      sounds[3].play();
     } else if (name == "key") {
-      sound_key.rewind();
-      sound_key.play();
+      sounds[4].rewind();
+      sounds[4].play();
     }
   }
 }

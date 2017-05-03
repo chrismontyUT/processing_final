@@ -1,9 +1,5 @@
 import ddf.minim.*;//
-AudioPlayer sound_gem;
-AudioPlayer sound_bomb;
-AudioPlayer sound_coin;
-AudioPlayer sound_mushroom;
-AudioPlayer sound_key;
+AudioPlayer[] sounds;
 AudioPlayer backgroundplayer;
 Minim MUS;
 Overlay overlay;
@@ -212,9 +208,15 @@ void mouseClicked() {
     if(muted) {
       muted = false;
       backgroundplayer.unmute();
+      for(int i = 0; i < 5; i++){
+        sounds[i].unmute();
+      }
     } else {
       muted = true;
       backgroundplayer.mute();
+      for(int i = 0; i < 5; i++){
+        sounds[i].mute();
+      }
     }
   }
 }
