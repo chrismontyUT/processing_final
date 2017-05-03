@@ -98,7 +98,8 @@ void setup() {
   }
 }
 
-void draw() { 
+void draw() {
+  println(player.numJumps);
   if(!is_game_over) {
   // Set backgroud color to black
   background(0);
@@ -112,42 +113,34 @@ void draw() {
   itemlevel[level-1].run();
   if (player.canMove()) {
     player.numJumps = 0;
-    if (keyPressed) {
-      if (keys[0]) {
-        //player.fallVelocity =0;
-        player.walk();
-      }
-      if(keys[1]) {
-        //player.fallVelocity =0;
-        player.walkBackwards();
-      }
-      if(keys[2]) {
-        player.fallVelocity =0;
-        player.jump();
-      }
-      if(keys[3]) {
-        player.fallVelocity =0;
-        player.duck();
-      }
+    if (keys[0]) {
+      //player.fallVelocity =0;
+      player.walk();
     }
-    else if (player.falling == false) {
+    if(keys[1]) {
+      //player.fallVelocity =0;
+      player.walkBackwards();
+    }
+    if(keys[2]) {
+      
+    }
+    if(keys[3]) {
+      player.fallVelocity =0;
+      player.duck();
+    }
+    if (player.falling == false) {
       player.fallVelocity =0;
       player.stand();
     }
   } else {
     player.fall();
-    if (keyPressed) {
-      if (key == CODED && keyCode == RIGHT) {
-        //player.fallVelocity =0;
-        player.walk();
-      }
-      if (key == CODED && keyCode == LEFT) {
-        //player.fallVelocity =0;
-        player.walkBackwards();
-      }
-      if (key == CODED && keyCode == UP) {
-        player.jump();
-      } //<>// //<>//
+    if (keys[0]) {
+      //player.fallVelocity =0;
+      player.walk();
+    }
+    if (keys[1]) {
+      //player.fallVelocity =0;
+      player.walkBackwards();
     }
   } 
  if(player.touched_spider()){
@@ -180,6 +173,9 @@ void keyPressed() {
   }
   if (key == CODED && keyCode == UP) {
     keys[2] = true;
+    player.fallVelocity =0;
+    player.jump();
+    println("test");
   }
   if (key == CODED && keyCode == DOWN) {
     keys[3] = true;

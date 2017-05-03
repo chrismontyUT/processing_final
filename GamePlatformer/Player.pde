@@ -109,7 +109,7 @@ class Player {
     }
   }
   void jump() {
-    if (numJumps<=1)
+    if (numJumps<2)
     {
       numJumps++;
       fallVelocity = -10;
