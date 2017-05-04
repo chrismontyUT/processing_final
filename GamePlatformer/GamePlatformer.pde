@@ -182,6 +182,15 @@ void draw() {
   
   player.prev_x = player.playerX;
   player.prev_y = player.playerY;
+//this writes out the coordinates of each tile to make it easier to edit levels
+  //textAlign(CENTER, CENTER);
+  //textSize(26);
+  //for (int i = 0; i<15; i++) {
+    
+  //  for (int j = 0; j<27; j++) {
+  //  text(str(j)+","+str(i), j*height/7.5+40, i * width/13.5+40);
+  //  }
+  //}
 }
 //<>//
 

@@ -15,7 +15,7 @@ class Player {
   PImage fall, stand, jump, duck; 
   float fallVelocity = 5;
   float fallGravity = 0.4;
-  int slow = 3;
+  int slow = 2;//changed from 3
   int xpos;//this is the top left corner of the sprite
   int ypos;//this is the top left corner
   PVector velocity;
@@ -83,7 +83,7 @@ class Player {
     velocity.x += 1;
 
     if (velocity.x > 3)
-      velocity.x = 3;
+      velocity.x = 4;//changed from 3
 
     if (levels[level-1].top_right_of_player() == true) {
       velocity.x = 0;
@@ -105,7 +105,7 @@ class Player {
     velocity.x -=1;
 
     if (velocity.x < -3)
-      velocity.x = -3;
+      velocity.x = -4;//changed from -3
     if (levels[level - 1].top_left_of_player() == true) {
       velocity.x = 0;
     }
