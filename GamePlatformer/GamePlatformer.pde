@@ -1,5 +1,6 @@
 import ddf.minim.*;// //<>// //<>//
 AudioPlayer[] sounds;
+PImage[][] item_images;
 AudioPlayer backgroundplayer;
 Minim MUS;
 Overlay overlay;
@@ -31,6 +32,7 @@ void setup() {
   muted = false;
   backgroundplayer = MUS.loadFile("background.wav", 2048);
   load_sounds();
+  load_item_images();
   backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
   ghosts = new GhostGroup();

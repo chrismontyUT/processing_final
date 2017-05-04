@@ -10,6 +10,35 @@ void load_sounds() {
   sounds[4] = MUS.loadFile("key.wav", 2048);
 }
 
+void load_item_images() {
+  item_images = new PImage[6][];
+  
+  item_images[0] = new PImage[4];
+  for(int i = 0; i < 4; i++) {
+    item_images[0][i] = loadImage("key" + (i+1) + ".png");
+  }
+  item_images[1] = new PImage[2];
+  for(int i = 0; i < 2; i++) {
+    item_images[1][i] = loadImage("mushroom" + (i+1) + ".png");
+  }
+  item_images[2] = new PImage[2];
+  for(int i = 0; i < 2; i++) {
+    item_images[2][i] = loadImage("bomb" + (i+1) + ".png");
+  }
+  item_images[3] = new PImage[4];
+  for(int i = 0; i < 4; i++) {
+    item_images[3][i] = loadImage("gem" + (i+1) + ".png");
+  }
+  item_images[4] = new PImage[3];
+  for(int i = 0; i < 3; i++) {
+    item_images[4][i] = loadImage("coin" + (i+1) + ".png");
+  }
+  item_images[5] = new PImage[4];
+  for(int i = 0; i < 4; i++) {
+    item_images[5][i] = loadImage("door" + (i+1) + ".png");
+  }
+}
+
 class ItemGroup {
   ArrayList<Item> itemgroups;
   PVector origin;
@@ -58,7 +87,9 @@ class Item {
   float timer;
   int lenofimg;
   String name;
+  int nameindex;
   Item(int x, int y, int nameindex) {
+    this.nameindex = nameindex;
     ItemX = x;
     ItemY = y;
     wid = player.images[0].width;
@@ -110,20 +141,16 @@ class Item {
       counter = 1;
     }
     if (lenofimg ==1 && gotkey == false) {
-      appear = loadImage("door0.png");
-      image(appear, ItemX, ItemY);
-      appear = loadImage("door1.png");
-      image(appear, ItemX, ItemY+70);
+      image(item_images[5][0], ItemX, ItemY);
+      image(item_images[5][1], ItemX, ItemY+70);
     }
     else if (lenofimg ==1 && gotkey == true) {
-      appear = loadImage("door3.png");
-      image(appear, ItemX, ItemY);
-      appear = loadImage("door4.png");
-      image(appear, ItemX, ItemY+70);
+      image(item_images[5][2], ItemX, ItemY);
+      image(item_images[5][3], ItemX, ItemY+70);
     } 
     else if (lenofimg !=1)  {
       appear = loadImage(name+str(counter)+".png");
-      image(appear, ItemX, ItemY);
+      image(item_images[nameindex][counter-1], ItemX, ItemY);
     }
     iscatch();
   }
