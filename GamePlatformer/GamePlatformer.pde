@@ -177,6 +177,9 @@ void draw() {
     display_game_over_screen();
     //setup();
   }
+  
+  player.prev_x = player.playerX;
+  player.prev_y = player.playerY;
 }
 //<>//
 
@@ -191,7 +194,6 @@ void keyPressed() {
     keys[2] = true;
     player.fallVelocity =0;
     player.jump();
-    println("test");
   }
   if (key == CODED && keyCode == DOWN) {
     keys[3] = true;
@@ -236,6 +238,5 @@ void keyTyped() {
   if (key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
     is_game_over = false;
-    setup();
   }
 }
