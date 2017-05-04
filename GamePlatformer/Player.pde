@@ -118,7 +118,7 @@ class Player {
     if (numJumps<2)
     {
       numJumps++;
-      fallVelocity = -10;
+      fallVelocity = -13;
       fall();
     }
   }
