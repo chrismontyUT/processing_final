@@ -140,6 +140,10 @@ class Player {
   void fall() {
     playerY += fallVelocity;
     
+    if((levels[level-1].top_right_of_player() || levels[level-1].top_left_of_player()) && player.playerY < player.prev_y) { 
+      player.playerY = player.prev_y; 
+    }
+    
     if(player.playerY < 0) {
       player.playerY = 0; 
     }
