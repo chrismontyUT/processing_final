@@ -10,6 +10,8 @@ EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player;
 Spider spider;
 boolean gotkey;
+boolean touchingspider;
+boolean touchinglaser;
 
 // Keeps track of which keys are pressed because Processing can't do that nativley
 boolean keys[] = new boolean[4];
@@ -34,7 +36,8 @@ void setup() {
   backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
   ghosts = new GhostGroup();
-
+  touchingspider = false;
+  touchinglaser = false;
   for (int i = 0; i<4; i++) {
     spider_group[i] = new EnemyGroup();
   }
@@ -160,23 +163,30 @@ void draw() {
         player.walkBackwards();
       }
     }  //<>//
-    if (player.touched_spider()) {
-      player.playerX = 1;
-      player.playerY = 1;
-      player.velocity.x = 0;
-      player.velocity.y = 0;
+    if (player.touched_spider() && touchingspider == false) {
+      //player.playerX = 1;
+      //player.playerY = 1;
+      //player.velocity.x = 0;
+      //player.velocity.y = 0;
+      touchingspider = true;
+      ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
       player.health = player.health-2;
       //is_game_over = true;
     }
-    if (levels[level-1].check_laser_collisions(player.get_corners())) {
-      player.playerX = 1;
-      player.playerY = 1;
-      player.velocity.x = 0;
-      player.velocity.y = 0;
+    if(player.touched_spider() == false && touchingspider == true){touchingspider = false;}
+    if (levels[level-1].check_laser_collisions(player.get_corners()) && touchinglaser == false) {
+      //player.playerX = 1;
+      //player.playerY = 1;
+      //player.velocity.x = 0;
+      //player.velocity.y = 0;
+      touchinglaser = true;
+      ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
       player.health = player.health-3;
       //is_game_over = true;
     }
-    if(player.health <=0){is_game_over = true;}
+    if(levels[level-1].check_laser_collisions(player.get_corners()) == false && touchinglaser == true){touchinglaser = false;}
+    println(player.health);
+    if(player.health <= 0){is_game_over = true;}
   } 
   else {
     display_game_over_screen();

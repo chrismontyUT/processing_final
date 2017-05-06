@@ -110,9 +110,9 @@ class Item {
       counter = 1;
     }
     if (lenofimg ==1 && gotkey == false) {
-      appear = loadImage("door0.png");
-      image(appear, ItemX, ItemY);
       appear = loadImage("door1.png");
+      image(appear, ItemX, ItemY);
+      appear = loadImage("door2.png");
       image(appear, ItemX, ItemY+70);
     }
     else if (lenofimg ==1 && gotkey == true) {
