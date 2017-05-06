@@ -4,8 +4,6 @@ class Player {
   int playerY;
   int orig_x;
   int orig_y;
-  int prev_x;
-  int prev_y;
   float health = 10;
   PImage[] images;
   PImage star;
@@ -15,7 +13,7 @@ class Player {
   PImage fall, stand, jump, duck; 
   float fallVelocity = 5;
   float fallGravity = 0.4;
-  int slow = 2;//changed from 3
+  int slow = 3;
   int xpos;//this is the top left corner of the sprite
   int ypos;//this is the top left corner
   PVector velocity;
@@ -83,7 +81,7 @@ class Player {
     velocity.x += 1;
 
     if (velocity.x > 3)
-      velocity.x = 4;//changed from 3
+      velocity.x = 3;
 
     if (levels[level-1].top_right_of_player() == true) {
       velocity.x = 0;
@@ -105,7 +103,7 @@ class Player {
     velocity.x -=1;
 
     if (velocity.x < -3)
-      velocity.x = -4;//changed from -3
+      velocity.x = -3;
     if (levels[level - 1].top_left_of_player() == true) {
       velocity.x = 0;
     }
@@ -118,7 +116,7 @@ class Player {
     if (numJumps<2)
     {
       numJumps++;
-      fallVelocity = -13;
+      fallVelocity = -10;
       fall();
     }
   }
@@ -139,19 +137,6 @@ class Player {
   }
   void fall() {
     playerY += fallVelocity;
-    
-    if((levels[level-1].top_right_of_player() || levels[level-1].top_left_of_player()) && player.playerY < player.prev_y) { 
-      player.playerY = player.prev_y; 
-    }
-    
-    if(player.playerY < 0) {
-      player.playerY = 0; 
-    }
-    fallVelocity += fallGravity;
-    if (fallVelocity>3) {
-      fallVelocity = 3;
-    }
-    
     if(player.playerY < 0) {
       player.playerY = 0; 
     }

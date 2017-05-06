@@ -1,6 +1,5 @@
 import ddf.minim.*;// //<>// //<>//
 AudioPlayer[] sounds;
-PImage[][] item_images;
 AudioPlayer backgroundplayer;
 Minim MUS;
 Overlay overlay;
@@ -15,7 +14,7 @@ boolean gotkey;
 // Keeps track of which keys are pressed because Processing can't do that nativley
 boolean keys[] = new boolean[4];
 
-int level = 4;
+int level = 1;
 ItemGroup itemlevel[] = new ItemGroup[4];
 GhostGroup ghosts;
 float point;
@@ -32,8 +31,7 @@ void setup() {
   muted = false;
   backgroundplayer = MUS.loadFile("background.wav", 2048);
   load_sounds();
-  load_item_images();
-  //backgroundplayer.loop();
+  backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
   ghosts = new GhostGroup();
 
@@ -87,7 +85,8 @@ void setup() {
     int x = row.getInt("x.pos");
     int y = row.getInt("y.pos");
     int id = row.getInt("index");
-    itemlevel[level - 1].addItem(x, y, id);
+    int itemlever = row.getInt("level");
+    itemlevel[itemlever - 1].addItem(x, y, id);
   }
 
   // Load Switches csv into each map
@@ -179,18 +178,6 @@ void draw() {
     display_game_over_screen();
     //setup();
   }
-  
-  player.prev_x = player.playerX;
-  player.prev_y = player.playerY;
-//this writes out the coordinates of each tile to make it easier to edit levels
-  textAlign(CENTER, CENTER);
-  textSize(26);
-  for (int i = 0; i<15; i++) {
-    
-    for (int j = 0; j<27; j++) {
-    text(str(j)+","+str(i), j*height/7.5+40, i * width/13.5+40);
-    }
-  }
 }
 //<>//
 
@@ -205,6 +192,7 @@ void keyPressed() {
     keys[2] = true;
     player.fallVelocity =0;
     player.jump();
+    println("test");
   }
   if (key == CODED && keyCode == DOWN) {
     keys[3] = true;
@@ -249,5 +237,6 @@ void keyTyped() {
   if (key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
     is_game_over = false;
+    setup();
   }
 }
