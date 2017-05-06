@@ -165,16 +165,20 @@ void draw() {
       player.playerY = 1;
       player.velocity.x = 0;
       player.velocity.y = 0;
-      is_game_over = true;
+      player.health = player.health-2;
+      //is_game_over = true;
     }
     if (levels[level-1].check_laser_collisions(player.get_corners())) {
       player.playerX = 1;
       player.playerY = 1;
       player.velocity.x = 0;
       player.velocity.y = 0;
-      is_game_over = true;
+      player.health = player.health-3;
+      //is_game_over = true;
     }
-  } else {
+    if(player.health <=0){is_game_over = true;}
+  } 
+  else {
     display_game_over_screen();
     //setup();
   }
