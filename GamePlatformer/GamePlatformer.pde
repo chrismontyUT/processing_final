@@ -15,7 +15,7 @@ boolean gotkey;
 // Keeps track of which keys are pressed because Processing can't do that nativley
 boolean keys[] = new boolean[4];
 
-int level = 1;
+int level = 4;
 ItemGroup itemlevel[] = new ItemGroup[4];
 GhostGroup ghosts;
 float point;
@@ -33,7 +33,7 @@ void setup() {
   backgroundplayer = MUS.loadFile("background.wav", 2048);
   load_sounds();
   load_item_images();
-  backgroundplayer.loop();
+  //backgroundplayer.loop();
   player = new Player(1, 1, "player", 11);
   ghosts = new GhostGroup();
 
@@ -183,14 +183,14 @@ void draw() {
   player.prev_x = player.playerX;
   player.prev_y = player.playerY;
 //this writes out the coordinates of each tile to make it easier to edit levels
-  //textAlign(CENTER, CENTER);
-  //textSize(26);
-  //for (int i = 0; i<15; i++) {
+  textAlign(CENTER, CENTER);
+  textSize(26);
+  for (int i = 0; i<15; i++) {
     
-  //  for (int j = 0; j<27; j++) {
-  //  text(str(j)+","+str(i), j*height/7.5+40, i * width/13.5+40);
-  //  }
-  //}
+    for (int j = 0; j<27; j++) {
+    text(str(j)+","+str(i), j*height/7.5+40, i * width/13.5+40);
+    }
+  }
 }
 //<>//
 
