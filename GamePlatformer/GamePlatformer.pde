@@ -1,4 +1,5 @@
-import ddf.minim.*;// //<>// //<>//
+PImage startscreen; //<>// //<>//
+import ddf.minim.*;// //<>//
 AudioPlayer[] sounds;
 AudioPlayer backgroundplayer;
 Minim MUS;
@@ -16,10 +17,11 @@ boolean touchinglaser;
 // Keeps track of which keys are pressed because Processing can't do that nativley
 boolean keys[] = new boolean[4];
 
-int level = 1;
+int level = 0;
 ItemGroup itemlevel[] = new ItemGroup[4];
 GhostGroup ghosts;
 float point;
+PFont title;
 
 void setup() {
   init_game_over();
@@ -31,6 +33,9 @@ void setup() {
   MUS = new Minim(this);
   overlay = new Overlay();
   muted = false;
+  startscreen = loadImage("start.jpg");
+  image(startscreen, 0, 0, 1215, 675);
+  title = createFont("font", 200, true);
   backgroundplayer = MUS.loadFile("background.wav", 2048);
   load_sounds();
   backgroundplayer.loop();
@@ -106,94 +111,106 @@ void setup() {
 
 void draw() {
   if (!is_game_over) {
-    // Set backgroud color to black
-    background(0);
-    // Display the map for the current level
-    levels[level-1].display();
-    int i = 0;
-    fill(255,255,0);
-    strokeWeight(4);
-    textSize(26);
-    text("Lifes:",300,35);
-    while ( i<player.health) {
-      image(player.star, 370+i*15, 6);
-      i = i+2;
-    }
-    text("Points:"+int(point),600,35);
-    overlay.display_sound_icon(muted);
-    // Set scaling to 0.5
-    scale(0.5);
-    // Update enemies for the current level
-    spider_group[level - 1].enemy_run();
-    itemlevel[level-1].run();
-    ghosts.run();
-    if (player.canMove()) {
-      boolean is_walking = false;
-      player.numJumps = 0;
-      if (keys[0]) {
-        //player.fallVelocity =0;
-        player.walk();
-        is_walking = true;
-      }
-      if (keys[1]) {
-        //player.fallVelocity =0;
-        player.walkBackwards();
-        is_walking = true;
-      }
-      if (keys[2]) {
-      }
-      if (keys[3]) {
-        player.fallVelocity =0;
-        player.duck();
-      }
-      if (player.falling == false) {
-        player.fallVelocity =0;
-        if (!is_walking) {
-          player.stand();
-        }
+    if (level == 0) {
+      textAlign(CENTER);
+      fill(255);
+      textSize(80);
+      text("Insert Game Name Here", 607, 115);
+      fill(#19CB20);
+      rect(507, 155, 200, 75);
+      textSize(40);
+      fill(255);
+      text("Start", 607, 205);
+      if (mousePressed && mouseX>507 && mouseX <707 && mouseY>155 && mouseY <230) {
+        println("The mouse is pressed and over the button");
+        fill(#0E7C12);
+        level += 1;
       }
     } else {
-      player.fall();
-      if (keys[0]) {
-        //player.fallVelocity =0;
-        player.walk();
+      // Set backgroud color to black
+      background(0);
+      // Display the map for the current level
+      levels[level-1].display();
+      int i = 0;
+      fill(255, 255, 0);
+      strokeWeight(4);
+      textSize(26);
+      text("Lifes:", 300, 35);
+      while ( i<player.health) {
+        image(player.star, 370+i*15, 6);
+        i = i+2;
       }
-      if (keys[1]) {
-        //player.fallVelocity =0;
-        player.walkBackwards();
+      text("Points:"+int(point), 600, 35);
+      overlay.display_sound_icon(muted);
+      // Set scaling to 0.5
+      scale(0.5);
+      // Update enemies for the current level
+      spider_group[level - 1].enemy_run();
+      itemlevel[level-1].run();
+      ghosts.run();
+      if (player.canMove()) {
+        boolean is_walking = false;
+        player.numJumps = 0;
+        if (keys[0]) {
+          //player.fallVelocity =0;
+          player.walk();
+          is_walking = true;
+        }
+        if (keys[1]) {
+          //player.fallVelocity =0;
+          player.walkBackwards();
+          is_walking = true;
+        }
+        if (keys[2]) {
+        }
+        if (keys[3]) {
+          player.fallVelocity =0;
+          player.duck();
+        }
+        if (player.falling == false) {
+          player.fallVelocity =0;
+          if (!is_walking) {
+            player.stand();
+          }
+        }
+      } else {
+        player.fall();
+        if (keys[0]) {
+          player.walk();
+        }
+        if (keys[1]) {
+          player.walkBackwards();
+        }
+      } 
+      if (player.touched_spider() && touchingspider == false) {
+        touchingspider = true;
+        ghosts.addGhost(player.playerX, player.playerY, player.images[0]);
+        player.health = player.health-2;
+        //is_game_over = true;
       }
-    }  //<>//
-    if (player.touched_spider() && touchingspider == false) {
-      //player.playerX = 1;
-      //player.playerY = 1;
-      //player.velocity.x = 0;
-      //player.velocity.y = 0;
-      touchingspider = true;
-      ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
-      player.health = player.health-2;
-      //is_game_over = true;
+      if (player.touched_spider() == false && touchingspider == true) {
+        touchingspider = false;
+      }
+      if (levels[level-1].check_laser_collisions(player.get_corners()) && touchinglaser == false) {
+
+        touchinglaser = true;
+        ghosts.addGhost(player.playerX, player.playerY, player.images[0]);
+        player.health = player.health-3;
+        //is_game_over = true;
+      }
+      if (levels[level-1].check_laser_collisions(player.get_corners()) == false && touchinglaser == true) {
+        touchinglaser = false;
+      }
+      println(player.health);
+      if (player.health <= 0) {
+        is_game_over = true;
+      } else {
+        display_game_over_screen();
+      }
     }
-    if(player.touched_spider() == false && touchingspider == true){touchingspider = false;}
-    if (levels[level-1].check_laser_collisions(player.get_corners()) && touchinglaser == false) {
-      //player.playerX = 1;
-      //player.playerY = 1;
-      //player.velocity.x = 0;
-      //player.velocity.y = 0;
-      touchinglaser = true;
-      ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
-      player.health = player.health-3;
-      //is_game_over = true;
-    }
-    if(levels[level-1].check_laser_collisions(player.get_corners()) == false && touchinglaser == true){touchinglaser = false;}
-    println(player.health);
-    if(player.health <= 0){is_game_over = true;}
-  } 
-  else {
-    display_game_over_screen();
-    //setup();
   }
 }
-//<>//
+
 
 void keyPressed() {
   if (key == CODED && keyCode == RIGHT) {
