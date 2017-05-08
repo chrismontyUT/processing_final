@@ -136,6 +136,7 @@ void draw() {
     while ( i<player.health) {
       image(player.star, 370+i*15, 6);
       i = i+2;
+      println(player.health);
     }
     text("Points:"+int(point),600,35);
     overlay.display_sound_icon(muted);
@@ -182,6 +183,7 @@ void draw() {
     if(player.touched_spider() == false && touchingspider == true){touchingspider = false;}
     if (levels[level-1].check_laser_collisions(player.get_corners()) && touchinglaser == false) {
       touchinglaser = true;
+      player.health = player.health-3;
       ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
     }
     if(levels[level-1].check_laser_collisions(player.get_corners()) == false && touchinglaser == true){touchinglaser = false;}
