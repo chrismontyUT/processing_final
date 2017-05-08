@@ -118,14 +118,21 @@ class Map {
     for(int i = 0; i < 4; i++) {
       for(int j = 0; j < num_lasers; j++) {
         if(lasers[j].on) {
-          if(lasers[j].dir == 0 || lasers[j].dir == 1) {
+          if(lasers[j].dir == 0) {
             // Check y
-            if(corners[i].x > lasers[j].get_x() + 45 && corners[i].x < lasers[j].get_end()) {
+            if(corners[i].x > lasers[j].get_start_x() && corners[i].x < lasers[j].get_end()) {
               if(corners[i].y > lasers[j].get_y() && corners[i].y < lasers[j].get_y() + 45) {
                 return true;
               }
             }
           }
+           else if (lasers[j].dir == 1){
+             if(corners[i].x > lasers[j].get_end() && corners[i].x < lasers[j].get_start_x()){
+               if(corners[i].y > lasers[j].get_y() && corners[i].y < lasers[j].get_y() + 45) {
+                return true;
+                }
+              }
+           }
         }
       }
     }

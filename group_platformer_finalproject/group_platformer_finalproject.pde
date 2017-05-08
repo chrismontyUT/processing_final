@@ -118,6 +118,7 @@ void setup() {
     }
   }
 void draw() {
+  println(player.playerX , player.playerY);
   if(is_game_start==false){
     display_start_menu();
 
