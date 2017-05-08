@@ -1,5 +1,8 @@
 float playx; //<>// //<>// //<>// //<>// //<>//
 float playy;
+int doorposx;
+int doorposy;
+PImage akey;
 
 void load_sounds() {
   sounds = new AudioPlayer[5];
@@ -96,6 +99,8 @@ class Item {
     if (nameindex == 5) {
       lenofimg = 1;
       name = "door";
+      doorposx = ItemX;
+      doorposy = ItemY;
     }
     counter = int(random(1, lenofimg+1));
   }
@@ -125,6 +130,9 @@ class Item {
       appear = loadImage(name+str(counter)+".png");
       image(appear, ItemX, ItemY);
     }
+    if(gotkey == true){
+      image(akey, doorposx, doorposy-60);
+    }
     iscatch();
   }
 
@@ -139,9 +147,8 @@ class Item {
       this.play_sound();
       if (name == "key") {
         gotkey = true;
-        isdead = false;
-        ItemX = 2350;
-        ItemY = 6; 
+        isdead = true;
+        akey = appear;
       }
       if(lenofimg ==1 && gotkey == true){
         if (level < 3){
