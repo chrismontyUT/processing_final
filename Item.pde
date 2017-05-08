@@ -134,8 +134,8 @@ class Item {
       player.health = player.health + eff;
       if(player.health >=12){player.health = 12;}
       if(name != "door"){
-              isdead = true;
-            }
+        isdead = true;
+      }
       this.play_sound();
       if (name == "key") {
         gotkey = true;
@@ -145,12 +145,12 @@ class Item {
       }
       if(lenofimg ==1 && gotkey == true){
         if (level < 3){
-                level = level + 1;
-              }
-              else{
-                is_game_win = true;
-                is_game_over = true;
-              }
+          level = level + 1;
+        }
+        else{
+          is_game_win = true;
+          is_game_over = true;
+        }
         player.playerX = 0;
         player.playerY = 0;
       }

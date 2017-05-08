@@ -1,11 +1,13 @@
 PImage startscreen; //<>// //<>//
-import ddf.minim.*;// //<>//
+import ddf.minim.*;
 AudioPlayer[] sounds;
 AudioPlayer backgroundplayer;
 Minim MUS;
 Overlay overlay;
 boolean muted;
 boolean is_game_over;
+boolean is_game_start;
+boolean is_game_win;
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
 Player player;
@@ -15,13 +17,13 @@ boolean touchingspider;
 boolean touchinglaser;
 
 // Keeps track of which keys are pressed because Processing can't do that nativley
-boolean keys[] = new boolean[4];
+boolean keys[] = new boolean[3]; //because there are only 3 inputs while playing
 
 int level = 0;
 ItemGroup itemlevel[] = new ItemGroup[4];
 GhostGroup ghosts;
 float point;
-PFont title;
+PFont font;
 
 void setup() {
   init_game_over();
@@ -33,12 +35,17 @@ void setup() {
   MUS = new Minim(this);
   overlay = new Overlay();
   muted = false;
-  startscreen = loadImage("start.jpg");
+ /* startscreen = loadImage("start.jpg");
   image(startscreen, 0, 0, 1215, 675);
-  title = createFont("font", 200, true);
+  font = createFont("font", 200, true);*/
   backgroundplayer = MUS.loadFile("background.wav", 2048);
   load_sounds();
   backgroundplayer.loop();
+  reset();
+}
+void reset(){
+  level = 1;
+  point = 0;
   player = new Player(1, 1, "player", 11);
   ghosts = new GhostGroup();
   touchingspider = false;
@@ -48,9 +55,7 @@ void setup() {
   }
   for (int j = 0; j<4; j++) {
     itemlevel[j] = new ItemGroup();
-    //print(j);
   }
-  // setitems();
   gotkey = false;
   Table spider_list = loadTable("spiders.csv", "header");
   for (TableRow row : spider_list.rows()) {
@@ -152,20 +157,14 @@ void draw() {
         boolean is_walking = false;
         player.numJumps = 0;
         if (keys[0]) {
-          //player.fallVelocity =0;
           player.walk();
           is_walking = true;
         }
         if (keys[1]) {
-          //player.fallVelocity =0;
           player.walkBackwards();
           is_walking = true;
         }
         if (keys[2]) {
-        }
-        if (keys[3]) {
-          player.fallVelocity =0;
-          player.duck();
         }
         if (player.falling == false) {
           player.fallVelocity =0;
@@ -201,11 +200,10 @@ void draw() {
       if (levels[level-1].check_laser_collisions(player.get_corners()) == false && touchinglaser == true) {
         touchinglaser = false;
       }
-      println(player.health);
       if (player.health <= 0) {
         is_game_over = true;
       } else {
-        display_game_over_screen();
+        //display_game_over_screen();
       }
     }
   }
@@ -223,10 +221,6 @@ void keyPressed() {
     keys[2] = true;
     player.fallVelocity =0;
     player.jump();
-    println("test");
-  }
-  if (key == CODED && keyCode == DOWN) {
-    keys[3] = true;
   }
 }
 

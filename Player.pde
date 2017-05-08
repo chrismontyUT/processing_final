@@ -1,4 +1,4 @@
-class Player { //<>//
+class Player {
 
   int playerX;
   int playerY;
@@ -194,7 +194,7 @@ class Player { //<>//
 
   void display()
   {
-    image(images[frame], playerX, playerY); 
+    image(images[frame], playerX, playerY); //<>//
 
   }
   boolean can_fall() {      //returns true if the tile beneath the player is black and the player can fall
