@@ -146,6 +146,7 @@ class Item {
       if(lenofimg ==1 && gotkey == true){
         if (level < 3){
           level = level + 1;
+          gotkey = false;
         }
         else{
           is_game_win = true;

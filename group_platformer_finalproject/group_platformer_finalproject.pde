@@ -118,7 +118,7 @@ void setup() {
     }
   }
 void draw() {
-  println(player.playerX , player.playerY);
+      
   if(is_game_start==false){
     display_start_menu();
 
@@ -149,12 +149,10 @@ void draw() {
       boolean is_walking = false;
       player.numJumps = 0;
       if (keys[0]) {
-        //player.fallVelocity =0;
         player.walk();
         is_walking = true;
       }
       if (keys[1]) {
-        //player.fallVelocity =0;
         player.walkBackwards();
         is_walking = true;
       }
@@ -170,37 +168,23 @@ void draw() {
     } else {
       player.fall();
       if (keys[0]) {
-        //player.fallVelocity =0;
         player.walk();
       }
       if (keys[1]) {
-        //player.fallVelocity =0;
         player.walkBackwards();
       }
     }  //<>//
     if (player.touched_spider() && touchingspider == false) {
-      //player.playerX = 1;
-      //player.playerY = 1;
-      //player.velocity.x = 0;
-      //player.velocity.y = 0;
       touchingspider = true;
       ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
       player.health = player.health-2;
-      //is_game_over = true;
     }
     if(player.touched_spider() == false && touchingspider == true){touchingspider = false;}
     if (levels[level-1].check_laser_collisions(player.get_corners()) && touchinglaser == false) {
-      //player.playerX = 1;
-      //player.playerY = 1;
-      //player.velocity.x = 0;
-      //player.velocity.y = 0;
       touchinglaser = true;
       ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
-      player.health = player.health-3;
-      //is_game_over = true;
     }
     if(levels[level-1].check_laser_collisions(player.get_corners()) == false && touchinglaser == true){touchinglaser = false;}
-    //println(player.health);
     if(player.health <= 0){is_game_over = true;}
   } 
   if (is_game_over == true && is_game_win == true)  {
@@ -212,17 +196,7 @@ void draw() {
   
   player.prev_x = player.playerX;
   player.prev_y = player.playerY;
-  //this is to help remove the tiles that make it hard to move
-  //textAlign(CENTER, CENTER);
-  //textSize(26);
-  //for (int i = 0; i<15; i++) {
-    
-  //  for (int j = 0; j<27; j++) {
-  //  text(str(j)+","+str(i), j*height/7.5+40, i * width/13.5+40);
-  //  }
-  //}
 }
-//<>//
 
 void keyPressed() {
   if (key == CODED && keyCode == RIGHT) {
@@ -235,7 +209,6 @@ void keyPressed() {
     keys[2] = true;
     player.fallVelocity =0;
     player.jump();
-    //println("test");
   }
   
 }
@@ -270,7 +243,13 @@ void mouseClicked() {
       }
     }
   }
+  /*  rect(100, 375, 250, 85);
+    rect(100, 500, 250, 85);
+    rect(100, 250, 250, 85);*/
   if(is_game_start==false){
+    if (mouseX>100&& mouseX<350 && mouseY>375 && mouseY<460){
+      is_game_start= true;  
+    }
     if (mouseX>100&& mouseX<350 && mouseY>375 && mouseY<460){
       is_game_start= true;  
     }
