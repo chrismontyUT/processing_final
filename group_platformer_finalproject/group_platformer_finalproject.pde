@@ -1,4 +1,4 @@
-import ddf.minim.*; //<>//
+import ddf.minim.*; //<>// //<>//
 AudioPlayer[] sounds;
 AudioPlayer backgroundplayer;
 Minim MUS;
@@ -28,7 +28,7 @@ float point;
 void setup() {
   doorpos[0] = new PVector(2350 , 10);
   doorpos[1] = new PVector(2350 , 10);
-  doorpos[2] = new PVector(280 , 920);
+  doorpos[2] = new PVector(1800 , 11300);
   doorpos[3] = new PVector(10 ,1980);
   init_game_over();
   is_game_over = false;
@@ -174,9 +174,9 @@ void draw() {
       }
     } else {
       player.fall(); //<>//
-      if (keys[0]) {
+      if (keys[0]) { //<>//
         player.walk();
-      }
+      } //<>//
       if (keys[1]) {
         player.walkBackwards(); 
       }
