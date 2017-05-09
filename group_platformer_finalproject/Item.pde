@@ -1,4 +1,4 @@
-float playx; //<>// //<>// //<>// //<>// //<>// //<>//
+float playx;  //<>//
 float playy;
 int doorposx;
 int doorposy;

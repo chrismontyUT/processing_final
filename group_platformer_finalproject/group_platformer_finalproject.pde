@@ -1,4 +1,4 @@
-import ddf.minim.*;// //<>// //<>// //<>//
+import ddf.minim.*; //<>//
 AudioPlayer[] sounds;
 AudioPlayer backgroundplayer;
 Minim MUS;
@@ -7,6 +7,7 @@ boolean muted;
 boolean is_game_over;
 boolean is_game_start;
 boolean is_game_win;
+boolean instructions;
 PVector[] doorpos = new PVector[4];
 Map levels[] = new Map[4];
 EnemyGroup spider_group[] = new EnemyGroup[4];
@@ -31,6 +32,7 @@ void setup() {
   doorpos[3] = new PVector(10 ,1980);
   init_game_over();
   is_game_over = false;
+  instructions = false;
   init_start_menu();
   is_game_start = false;
   init_game_win();
@@ -60,9 +62,7 @@ void setup() {
     }
     for (int j = 0; j<4; j++) {
       itemlevel[j] = new ItemGroup();
-      //print(j);
     }
-    // setitems();
     gotkey = false;
     Table spider_list = loadTable("spiders.csv", "header");
     for (TableRow row : spider_list.rows()) {
@@ -125,7 +125,11 @@ void draw() {
   if(is_game_start==false){
     display_start_menu();
     overlay.display_sound_icon(muted);
-  }
+    if (instructions == true){
+      display_instructions(); 
+      overlay.display_sound_icon(muted);
+    }
+}
   else if (is_game_over==false) {
     // Set backgroud color to black
     background(0);
@@ -169,14 +173,14 @@ void draw() {
         }
       }
     } else {
-      player.fall();
+      player.fall(); //<>//
       if (keys[0]) {
         player.walk();
       }
       if (keys[1]) {
-        player.walkBackwards(); //<>//
+        player.walkBackwards(); 
       }
-    }  //<>//
+    } 
     if (player.touched_spider() && touchingspider == false) {
       touchingspider = true;
       ghosts.addGhost(player.playerX, player.playerY,player.images[0]);
@@ -194,6 +198,7 @@ void draw() {
   if (is_game_over == true && is_game_win == true)  {
     display_game_win_screen();
   }
+  
   if (is_game_over == true && is_game_win == false)  {
     display_game_over_screen();
   }
@@ -247,17 +252,17 @@ void mouseClicked() {
       }
     }
   }
-  /*  rect(100, 375, 250, 85);
-    rect(100, 500, 250, 85);
-    rect(100, 250, 250, 85);*/
+
   if(is_game_start==false){
-    if (mouseX>100&& mouseX<350 && mouseY>375 && mouseY<460){
+    if (mouseX>100&& mouseX<350 && mouseY>250 && mouseY<335){
+      instructions = false;
       is_game_start= true;  
     }
     if (mouseX>100&& mouseX<350 && mouseY>375 && mouseY<460){
-      is_game_start= true;  
+      instructions = true;  
     }
     if (mouseX>100&& mouseX<350 && mouseY>500 && mouseY<585){
+      instructions = false;
       exit(); 
     }
   }
@@ -280,7 +285,6 @@ void mouseClicked() {
     }
   }
 }
-
 void keyTyped() {
   if (key == ' ') {
     levels[level-1].space_pressed(player.get_corners());
