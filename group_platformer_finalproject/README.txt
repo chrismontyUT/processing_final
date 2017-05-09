@@ -1,0 +1,3 @@
+For this assignment, the group is making a game about collecting items and keys to open doors and move to the next level. To run this game, please download the folder “group_platformer_finalproject” and then unzip the entire folder. 
+
+To run the game, group_platformer_finalproject.pde, you must download all the contents in the zip folder, including things in the data folder. Please also make sure that minim library installed on your computer, that is required to play the background music and other music in the game. Now, you can click "RUN" to play the game.
