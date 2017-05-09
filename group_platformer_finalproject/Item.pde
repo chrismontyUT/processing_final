@@ -1,8 +1,9 @@
-float playx; //<>// //<>// //<>// //<>// //<>//
+float playx; //<>// //<>// //<>// //<>// //<>// //<>//
 float playy;
 int doorposx;
 int doorposy;
 PImage akey;
+
 
 void load_sounds() {
   sounds = new AudioPlayer[5];
@@ -61,6 +62,10 @@ class Item {
   float timer;
   int lenofimg;
   String name;
+  PImage door_closed1 = loadImage("door1.png");
+  PImage door_closed2 = loadImage("door2.png");
+  PImage door_open1 = loadImage("door3.png");
+  PImage door_open2 = loadImage("door4.png");
   Item(int x, int y, int nameindex) {
     ItemX = x;
     ItemY = y;
@@ -115,23 +120,23 @@ class Item {
       counter = 1;
     }
     if (lenofimg ==1 && gotkey == false) {
-      appear = loadImage("door1.png");
-      image(appear, ItemX, ItemY);
-      appear = loadImage("door2.png");
-      image(appear, ItemX, ItemY+70);
+     // appear = loadImage("door1.png");
+      image(door_closed1, ItemX, ItemY);
+      //appear = loadImage("door2.png");
+      image(door_closed2, ItemX, ItemY+70);
     }
     else if (lenofimg ==1 && gotkey == true) {
-      appear = loadImage("door3.png");
-      image(appear, ItemX, ItemY);
-      appear = loadImage("door4.png");
-      image(appear, ItemX, ItemY+70);
+      //appear = loadImage("door3.png");
+      image(door_open1, ItemX, ItemY);
+     // appear = loadImage("door4.png");
+      image(door_open2, ItemX, ItemY+70);
     } 
     else if (lenofimg !=1)  {
       appear = loadImage(name+str(counter)+".png");
       image(appear, ItemX, ItemY);
     }
     if(gotkey == true){
-      image(akey, doorposx, doorposy-60);
+      image(akey, doorpos[level - 1].x, doorpos[level - 1].y);
     }
     iscatch();
   }
