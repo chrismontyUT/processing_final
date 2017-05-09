@@ -120,16 +120,16 @@ class Item {
       counter = 1;
     }
     if (lenofimg ==1 && gotkey == false) {
-     // appear = loadImage("door1.png");
-      image(door_closed1, ItemX, ItemY);
-      //appear = loadImage("door2.png");
-      image(door_closed2, ItemX, ItemY+70);
+      appear = door_closed1;
+      image(appear, ItemX, ItemY-70);
+      appear = door_closed2;
+      image(appear, ItemX, ItemY);
     }
     else if (lenofimg ==1 && gotkey == true) {
-      //appear = loadImage("door3.png");
-      image(door_open1, ItemX, ItemY);
-     // appear = loadImage("door4.png");
-      image(door_open2, ItemX, ItemY+70);
+      appear = door_open1;
+      image(appear, ItemX, ItemY-70);
+      appear = door_open2;
+      image(appear, ItemX, ItemY);
     } 
     else if (lenofimg !=1)  {
       appear = loadImage(name+str(counter)+".png");
