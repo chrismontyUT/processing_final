@@ -124,7 +124,7 @@ void draw() {
       
   if(is_game_start==false){
     display_start_menu();
-
+    overlay.display_sound_icon(muted);
   }
   else if (is_game_over==false) {
     // Set backgroud color to black
