@@ -1,1 +1,16 @@
-The game is asking players to collect or avoid something in order to survive and get to the next level. The mushroom, coin and gem are helping the player to restore their health and earn more points. However, bomb, laser and spiders are having negative effects on the player's health and points. In each level, the player must collect the key and go to the door in order to go to the next level. Whenever the player collects something, some music will be played, and when the player lose a life, a ghost will raise from its position. Also, the player can mute the music in the game by clicking the music button on the top right. 
+The game is asking players to collect or avoid something in order to survive and get to the next level.
+The mushroom, coin and gem help the player to restore their health and earn more points. 
+The bomb, laser and spiders have negative effects on the player's health and points. 
+In each level, the player must collect the key and go to the door in order to go to the next level. 
+Whenever the player collects something, some music will be played, and when the player lose a life, a ghost will raise from its position. 
+Also, the player can mute the music in the game by clicking the music button on the top right. 
+
+-Chris' contribution:
+	The majority of my contribution was with the environment and the enemies. I helped make each level's
+map interactive by checking for collisions with the player. Also I worked on creating the enemy_group class
+and the spider class, as well as checking for collisions between the player and spiders and between the player
+and the lasers. The enemy_group class creates an array for holding multiple spider objects while the spider
+class creates the spiders and gives them the back and forth movement by defining an X range for them to move
+along. The hardest challenge was in collision checking between the player and the metal tiles. This was because
+the player didn't fall at a constant speed, but accelerated. This made checking for a specific boundary hard.
+Additionally, I made the spider, lasers, and switch csv files to load data into the program.
